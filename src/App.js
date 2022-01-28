@@ -1,9 +1,11 @@
 import React from 'react';
 import './App.css';
 
+import Routes from './Routes';
+
 function App() {
   return (
-    <h1>Grupo 18</h1>
+    <Routes />
   );
 }
 

@@ -7,7 +7,7 @@ class Foods extends Component {
     );
   }
 }
-// cocktailsToken
+// cocktailsTokengt
 // mealsToken
 
 export default Foods;
