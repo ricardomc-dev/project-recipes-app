@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
+import Header from '../components/Header';
 
 class Foods extends Component {
   render() {
     return (
-      <h1>Foods</h1>
+      <>
+        <h1>Foods</h1>
+        <Header />
+      </>
     );
   }
 }
