@@ -25,10 +25,10 @@ class Login extends Component {
       this.setState({ disabled: true });
     }
   };
-  // https://stackoverflow.com/questions/46155/whats-the-best-way-to-validate-an-email-address-in-javascript
 
   validateEmail = (email) => String(email)
     .toLowerCase().match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+  // https://stackoverflow.com/questions/46155/whats-the-best-way-to-validate-an-email-address-in-javascript
 
   handleClick = () => {
     const { email } = this.state;
