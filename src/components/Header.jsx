@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import Input from './Input';
@@ -13,6 +13,7 @@ class Header extends Component {
     this.state = {
       searchInput: '',
       showInput: false,
+      redirect: false,
     };
   }
 
@@ -30,36 +31,45 @@ class Header extends Component {
     this.setState({ [name]: value });
   }
 
+  sendToPage2 = () => {
+    this.setState({ redirect: true });
+  }
+
   render() {
-    const { searchInput, showInput } = this.state;
-    const { children } = this.props;
+    const { searchInput, showInput, redirect } = this.state;
+    const { children, showSearchBtn } = this.props;
 
     return (
       <>
         <div>
-          <Link to="/profile">
+          <button
+            data-testid="profile-top-btn"
+            onClick={ this.sendToPage2 }
+            type="button"
+          >
             <img
               alt="imagem do usuário logado"
-              data-testid="profile-top-btn"
               src={ profileIcon }
             />
-          </Link>
+            { redirect && <Redirect to="/profile" />}
+          </button>
           <h1
             data-testid="page-title"
           >
             {children}
           </h1>
-          <button
-            data-testid="search-top-btn"
-            type="button"
-            onClick={ this.handleShowInput }
-          >
-            <img
-              alt="imagem do usuário logado"
-              data-testid="profile-top-btn"
-              src={ searchIcon }
-            />
-          </button>
+          { showSearchBtn && (
+            <button
+              data-testid="search-top-btn"
+              type="button"
+              onClick={ this.handleShowInput }
+            >
+              <img
+                alt="botão de busca"
+                src={ searchIcon }
+              />
+            </button>
+          ) }
         </div>
         { showInput && (
           <Input
@@ -80,6 +90,7 @@ class Header extends Component {
 
 Header.propTypes = {
   children: PropTypes.string.isRequired,
+  showSearchBtn: PropTypes.bool.isRequired,
 };
 
 export default Header;

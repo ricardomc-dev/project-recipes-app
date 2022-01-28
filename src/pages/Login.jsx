@@ -48,6 +48,7 @@ class Login extends Component {
 
     return (
       <>
+        <h1>Login</h1>
         <Input
           dataTestId="email-input"
           idLabel="email"

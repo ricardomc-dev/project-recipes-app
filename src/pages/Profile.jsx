@@ -1,9 +1,17 @@
 import React, { Component } from 'react';
+import Header from '../components/Header';
 
 class Profile extends Component {
   render() {
     return (
-      <h1>Profile</h1>
+      <>
+        <Header>
+          Profile
+        </Header>
+        {/* <button data-testid="profile-done-btn" type="button">Profile</button>
+        <button data-testid="profile-favorite-btn" type="button">Profile</button>
+        <button data-testid="profile-logout-btn" type="button">Profile</button> */}
+      </>
     );
   }
 }
