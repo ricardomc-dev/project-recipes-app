@@ -15,6 +15,34 @@ class Login extends Component {
     };
   }
 
+  validateButton = () => {
+    const { email, password } = this.state;
+    const min = 6;
+
+    if (this.validateEmail(email) && password.length > min) {
+      this.setState({ disabled: false });
+    } else {
+      this.setState({ disabled: true });
+    }
+  };
+  // https://stackoverflow.com/questions/46155/whats-the-best-way-to-validate-an-email-address-in-javascript
+
+  validateEmail = (email) => String(email)
+    .toLowerCase().match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/);
+
+  handleClick = () => {
+    const { email } = this.state;
+    const { history } = this.props;
+    history.push('/foods');
+    localStorage.setItem('mealsToken', 1);
+    localStorage.setItem('cocktailsToken', 1);
+    localStorage.setItem('user', JSON.stringify({ email }));
+  }
+
+  handleInputChange = ({ target: { name, value } }) => {
+    this.setState({ [name]: value }, () => { this.validateButton(); });
+  }
+
   render() {
     const { disabled, email, password } = this.state;
 
@@ -52,5 +80,9 @@ class Login extends Component {
     );
   }
 }
+
+Login.propTypes = {
+  history: PropTypes.string.isRequired,
+};
 
 export default Login;
