@@ -1,11 +1,26 @@
 import React, { Component } from 'react';
+import Header from '../components/Header';
 
-class ExploreRecipes extends Component {
+class FavoriteRecipes extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      showSearchBtn: false,
+    };
+  }
+
   render() {
+    const { showSearchBtn } = this.state;
+
     return (
-      <h1>DoneRecipes</h1>
+      <Header
+        showSearchBtn={ showSearchBtn }
+      >
+        Favorite Recipes
+      </Header>
     );
   }
 }
 
-export default ExploreRecipes;
+export default FavoriteRecipes;

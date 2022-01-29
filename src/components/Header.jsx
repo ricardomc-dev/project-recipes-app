@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
+import './Header.css';
+
 import Input from './Input';
 import profileIcon from '../images/profileIcon.svg';
 import searchIcon from '../images/searchIcon.svg';
@@ -19,12 +21,13 @@ class Header extends Component {
 
   handleShowInput = () => {
     const { showInput } = this.state;
-    console.log('clicou');
-    if (showInput === false) {
-      this.setState({ showInput: true });
-    } else {
-      this.setState({ showInput: false });
-    }
+    this.setState((prev) => ({
+      ...prev, showInput: !showInput }));
+    // if (showInput === false) {
+    //   this.setState({ showInput: true });
+    // } else {
+    //   this.setState({ showInput: false });
+    // }
   }
 
   handleInputChange = ({ target: { name, value } }) => {
@@ -32,7 +35,7 @@ class Header extends Component {
   }
 
   sendToPage2 = () => {
-    this.setState({ redirect: true });
+    this.setState((prev) => ({ ...prev, redirect: true }));
   }
 
   render() {
@@ -41,14 +44,14 @@ class Header extends Component {
 
     return (
       <>
-        <div>
+        <div className="header-container">
           <button
-            data-testid="profile-top-btn"
             onClick={ this.sendToPage2 }
             type="button"
           >
             <img
-              alt="imagem do usuário logado"
+              data-testid="profile-top-btn"
+              alt="profileIcon"
               src={ profileIcon }
             />
             { redirect && <Redirect to="/profile" />}
@@ -60,37 +63,45 @@ class Header extends Component {
           </h1>
           { showSearchBtn && (
             <button
-              data-testid="search-top-btn"
               type="button"
               onClick={ this.handleShowInput }
             >
               <img
-                alt="botão de busca"
+                data-testid="search-top-btn"
+                alt="SearchIcon"
                 src={ searchIcon }
               />
             </button>
           ) }
         </div>
-        { showInput && (
-          <Input
-            dataTestId="search-input"
-            idLabel="searchInput"
-            textLabel="searchInput"
-            nameInput="searchInput"
-            placeholderInput="Search Recipe"
-            handleInputChange={ this.handleInputChange }
-            typeInput="searchInput"
-            valueInput={ searchInput }
-          />
-        ) }
+        <div className="input-container">
+          { showInput && (
+            <Input
+              dataTestId="search-input"
+              idLabel="searchInput"
+              nameInput="searchInput"
+              placeholderInput="Search Recipe"
+              handleInputChange={ this.handleInputChange }
+              typeInput="searchInput"
+              valueInput={ searchInput }
+            />
+          ) }
+        </div>
       </>
     );
   }
 }
 
 Header.propTypes = {
-  children: PropTypes.string.isRequired,
-  showSearchBtn: PropTypes.bool.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.arrayOf(PropTypes.node),
+    PropTypes.node,
+  ]).isRequired,
+  showSearchBtn: PropTypes.bool,
+};
+
+Header.defaultProps = {
+  showSearchBtn: true,
 };
 
 export default Header;

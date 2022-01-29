@@ -1,9 +1,24 @@
 import React, { Component } from 'react';
+import Header from '../components/Header';
 
 class ExploreDrinks extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      showSearchBtn: false,
+    };
+  }
+
   render() {
+    const { showSearchBtn } = this.state;
+
     return (
-      <h1>DoneRecipes</h1>
+      <Header
+        showSearchBtn={ showSearchBtn }
+      >
+        Explore Drinks
+      </Header>
     );
   }
 }

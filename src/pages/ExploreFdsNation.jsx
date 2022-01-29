@@ -1,11 +1,26 @@
 import React, { Component } from 'react';
+import Header from '../components/Header';
 
-class ExploreDksNation extends Component {
+class ExploreFdsNation extends Component {
+  constructor() {
+    super();
+
+    this.state = {
+      showSearchBtn: true,
+    };
+  }
+
   render() {
+    const { showSearchBtn } = this.state;
+
     return (
-      <h1>DoneRecipes</h1>
+      <Header
+        showSearchBtn={ showSearchBtn }
+      >
+        Explore Nationalities
+      </Header>
     );
   }
 }
 
-export default ExploreDksNation;
+export default ExploreFdsNation;
