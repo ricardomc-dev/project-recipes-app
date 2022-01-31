@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import Header from '../components/Header';
 
-class Foods extends Component {
+class DoneRecipes extends Component {
   constructor() {
     super();
 
     this.state = {
-      showSearchBtn: true,
+      showSearchBtn: false,
     };
   }
 
@@ -17,10 +17,10 @@ class Foods extends Component {
       <Header
         showSearchBtn={ showSearchBtn }
       >
-        Foods
+        Done Recipes
       </Header>
     );
   }
 }
 
-export default Foods;
+export default DoneRecipes;

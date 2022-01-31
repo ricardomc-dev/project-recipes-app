@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Header from '../components/Header';
 
-class Foods extends Component {
+class ExploreFdsNation extends Component {
   constructor() {
     super();
 
@@ -17,10 +17,10 @@ class Foods extends Component {
       <Header
         showSearchBtn={ showSearchBtn }
       >
-        Foods
+        Explore Nationalities
       </Header>
     );
   }
 }
 
-export default Foods;
+export default ExploreFdsNation;

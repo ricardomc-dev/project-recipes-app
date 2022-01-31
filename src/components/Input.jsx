@@ -31,14 +31,24 @@ class Input extends Component {
 }
 
 Input.propTypes = {
-  placeholderInput: PropTypes.string.isRequired,
-  dataTestId: PropTypes.string.isRequired,
+  placeholderInput: PropTypes.string,
+  dataTestId: PropTypes.string,
   typeInput: PropTypes.string.isRequired,
-  nameInput: PropTypes.string.isRequired,
-  handleInputChange: PropTypes.func.isRequired,
-  valueInput: PropTypes.string.isRequired,
-  idLabel: PropTypes.string.isRequired,
-  textLabel: PropTypes.string.isRequired,
+  nameInput: PropTypes.string,
+  handleInputChange: PropTypes.func,
+  valueInput: PropTypes.string,
+  idLabel: PropTypes.string,
+  textLabel: PropTypes.string,
+};
+
+Input.defaultProps = {
+  placeholderInput: '',
+  nameInput: '',
+  valueInput: '',
+  dataTestId: '',
+  idLabel: '',
+  textLabel: '',
+  handleInputChange: () => {},
 };
 
 export default Input;

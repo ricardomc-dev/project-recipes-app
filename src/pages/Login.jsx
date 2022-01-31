@@ -47,13 +47,13 @@ class Login extends Component {
     const { disabled, email, password } = this.state;
 
     return (
-      <>
+      <div className="login-container">
+        <h1>Login</h1>
         <Input
           dataTestId="email-input"
           idLabel="email"
-          textLabel="email"
           nameInput="email"
-          placeholderInput="Digite seu email"
+          placeholderInput="Email"
           handleInputChange={ this.handleInputChange }
           typeInput="email"
           valueInput={ email }
@@ -61,9 +61,8 @@ class Login extends Component {
         <Input
           dataTestId="password-input"
           idLabel="password"
-          textLabel="password"
           nameInput="password"
-          placeholderInput="Digite seu password"
+          placeholderInput="Password"
           handleInputChange={ this.handleInputChange }
           typeInput="password"
           valueInput={ password }
@@ -74,15 +73,17 @@ class Login extends Component {
           handleClick={ this.handleClick }
           typeBtn="button"
         >
-          Entrar
+          Enter
         </Button>
-      </>
+      </div>
     );
   }
 }
 
 Login.propTypes = {
-  history: PropTypes.string.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+  }).isRequired,
 };
 
 export default Login;
