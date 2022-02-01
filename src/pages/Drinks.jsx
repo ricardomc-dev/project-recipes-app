@@ -1,9 +1,10 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import RecipeContext from '../context/RecipesContext';
 
 function Drinks() {
+  const [newArrayDrinks, setNewArrayDrinks] = useState([]);
   const {
     handleClickDrinks,
     arrayDrinks,
@@ -12,16 +13,17 @@ function Drinks() {
   const showSearchBtn = true;
   const history = useHistory();
 
-  const handleOneItem = () => {
+  useEffect(() => {
     const ONE = 1;
     if (arrayDrinks.length === ONE) {
       return history.push(`/drinks/${arrayDrinks[0].idDrink}`);
     }
-  };
+  }, [arrayDrinks, history]);
 
   useEffect(() => {
-    handleOneItem();
-  });
+    const TWELVE = 12;
+    setNewArrayDrinks(arrayDrinks.slice(0, TWELVE));
+  }, [arrayDrinks]);
 
   return (
     <>
@@ -32,11 +34,19 @@ function Drinks() {
         Drinks
       </Header>
       <main>
-        {arrayDrinks.map((drink) => (
-          <div key={ drink.idDrink }>
-            <p>{drink.strDrink}</p>
-            <img src={ `${drink.strDrinkThumb}/preview` } alt={ drink.strDrink } />
-            <Link to={ `/drinks/${drink.idDrink}` }>Detalhes</Link>
+        {newArrayDrinks.map((drink, id) => (
+          <div data-testid={ `${id}-recipe-card` } key={ drink.idDrink }>
+            <Link to={ `/drinks/${drink.idDrink}` }>
+              <div>
+                <img
+                  src={ `${drink.strDrinkThumb}/preview` }
+                  alt={ drink.strDrink }
+                  data-testid={ `${id}-card-img` }
+                />
+                <p data-testid={ `${id}-card-name` }>{drink.strDrink}</p>
+              </div>
+            </Link>
+            <br />
           </div>
         ))}
       </main>
