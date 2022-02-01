@@ -15,14 +15,16 @@ function Foods() {
 
   useEffect(() => {
     const ONE = 1;
-    if (arrayMeals.length === ONE) {
+    if (arrayMeals !== null && arrayMeals.length === ONE) {
       return history.push(`/foods/${arrayMeals[0].idMeal}`);
     }
   }, [arrayMeals, history]);
 
   useEffect(() => {
     const TWELVE = 12;
-    setNewArrayMeals(arrayMeals.slice(0, TWELVE));
+    if (arrayMeals !== null) {
+      return setNewArrayMeals(arrayMeals.slice(0, TWELVE));
+    }
   }, [arrayMeals]);
 
   return (

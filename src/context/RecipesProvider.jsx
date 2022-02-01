@@ -14,13 +14,21 @@ function RecipeProvider({ children }) {
   const [arrayMeals, setArrayMeals] = useState([]);
   const [arrayDrinks, setArrayDrinks] = useState([]);
 
+  const verifyLength = (param) => {
+    if (param === null || !param) {
+      return global.alert('Sorry, we haven\'t found any recipes for these filters.');
+    }
+  };
+
   const handleClickFoods = async () => {
     if (searchRadio === 'ingredient') {
       const meals = await ingredientApi(searchInput);
+      verifyLength(meals);
       setArrayMeals(meals);
     }
     if (searchRadio === 'name') {
       const meals = await nameApi(searchInput);
+      verifyLength(meals);
       setArrayMeals(meals);
     }
     if (searchRadio === 'first-letter') {
@@ -29,6 +37,7 @@ function RecipeProvider({ children }) {
         return global.alert('Your search must have only 1 (one) character');
       }
       const meals = await firstLetterApi(searchInput);
+      verifyLength(meals);
       setArrayMeals(meals);
     }
   };
@@ -36,10 +45,12 @@ function RecipeProvider({ children }) {
   const handleClickDrinks = async () => {
     if (searchRadio === 'ingredient') {
       const drinks = await ingredientDrinksApi(searchInput);
+      verifyLength(drinks);
       setArrayDrinks(drinks);
     }
     if (searchRadio === 'name') {
       const drinks = await nameDrinksApi(searchInput);
+      verifyLength(drinks);
       setArrayDrinks(drinks);
     }
     if (searchRadio === 'first-letter') {
@@ -48,6 +59,7 @@ function RecipeProvider({ children }) {
         return global.alert('Your search must have only 1 (one) character');
       }
       const drinks = await firstLetterDrinksApi(searchInput);
+      verifyLength(drinks);
       setArrayDrinks(drinks);
     }
   };

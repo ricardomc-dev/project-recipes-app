@@ -15,14 +15,17 @@ function Drinks() {
 
   useEffect(() => {
     const ONE = 1;
-    if (arrayDrinks.length === ONE) {
+    if (arrayDrinks !== null && arrayDrinks.length === ONE) {
       return history.push(`/drinks/${arrayDrinks[0].idDrink}`);
     }
   }, [arrayDrinks, history]);
 
   useEffect(() => {
     const TWELVE = 12;
-    setNewArrayDrinks(arrayDrinks.slice(0, TWELVE));
+    if (arrayDrinks !== null && arrayDrinks) {
+      console.log(arrayDrinks);
+      return setNewArrayDrinks(arrayDrinks.slice(0, TWELVE));
+    }
   }, [arrayDrinks]);
 
   return (

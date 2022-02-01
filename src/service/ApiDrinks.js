@@ -1,9 +1,9 @@
 // Drinks
-export function ingredientDrinksApi(ingredient) {
-  return fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingredient}`)
+export function ingredientDrinksApi(ingrediente) {
+  return fetch(`https://www.thecocktaildb.com/api/json/v1/1/filter.php?i=${ingrediente}`)
     .then((response) => response.json())
     .then((data) => data.drinks)
-    .catch((error) => error);
+    .catch((error) => error === null);
 }
 
 export function nameDrinksApi(nome) {
