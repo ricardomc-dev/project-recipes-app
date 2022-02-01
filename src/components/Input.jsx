@@ -12,6 +12,7 @@ class Input extends Component {
       handleInputChange,
       typeInput,
       valueInput,
+      className,
     } = this.props;
     return (
       <label htmlFor={ idLabel }>
@@ -24,6 +25,7 @@ class Input extends Component {
           onChange={ handleInputChange }
           type={ typeInput }
           value={ valueInput }
+          className={ className }
         />
       </label>
     );
@@ -39,6 +41,7 @@ Input.propTypes = {
   valueInput: PropTypes.string,
   idLabel: PropTypes.string,
   textLabel: PropTypes.string,
+  className: PropTypes.string,
 };
 
 Input.defaultProps = {
@@ -48,6 +51,7 @@ Input.defaultProps = {
   dataTestId: '',
   idLabel: '',
   textLabel: '',
+  className: '',
   handleInputChange: () => {},
 };
 

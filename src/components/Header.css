@@ -3,7 +3,7 @@
   background-color: #ccc;
   display: flex;
   height: 50px;
-  justify-content: space-between;
+  justify-content: space-around;
   margin-top: 10px;
 }
 

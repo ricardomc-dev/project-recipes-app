@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { ingredientApi, nameApi, firstLetterApi } from '../service/Api';
 
 import './Header.css';
 
@@ -14,8 +15,10 @@ class Header extends Component {
 
     this.state = {
       searchInput: '',
+      searchRadio: '',
       showInput: false,
       redirect: false,
+      arrayMeals: [],
     };
   }
 
@@ -23,15 +26,42 @@ class Header extends Component {
     const { showInput } = this.state;
     this.setState((prev) => ({
       ...prev, showInput: !showInput }));
-    // if (showInput === false) {
-    //   this.setState({ showInput: true });
-    // } else {
-    //   this.setState({ showInput: false });
-    // }
   }
 
   handleInputChange = ({ target: { name, value } }) => {
     this.setState({ [name]: value });
+  }
+
+  handleRadioChange = ({ target: { id, checked } }) => {
+    if (checked) {
+      this.setState({ searchRadio: id });
+    }
+  }
+
+  handleClick = async () => {
+    const { searchInput, searchRadio } = this.state;
+    if (searchRadio === 'ingredient') {
+      const meals = await ingredientApi(searchInput);
+      this.setState((prev) => ({
+        ...prev, arrayMeals: meals,
+      }));
+    }
+    if (searchRadio === 'name') {
+      const meals = await nameApi(searchInput);
+      this.setState((prev) => ({
+        ...prev, arrayMeals: meals,
+      }));
+    }
+    if (searchRadio === 'first-letter') {
+      const ONE = 1;
+      if (searchInput.length > ONE) {
+        return global.alert('Your search must have only 1 (one) character');
+      }
+      const meals = await firstLetterApi(searchInput);
+      this.setState((prev) => ({
+        ...prev, arrayMeals: meals,
+      }));
+    }
   }
 
   sendToPage2 = () => {
@@ -74,19 +104,55 @@ class Header extends Component {
             </button>
           ) }
         </div>
-        <div className="input-container">
-          { showInput && (
+
+        { showInput && (
+          <div>
             <Input
               dataTestId="search-input"
               idLabel="searchInput"
               nameInput="searchInput"
               placeholderInput="Search Recipe"
               handleInputChange={ this.handleInputChange }
-              typeInput="searchInput"
+              typeInput="text"
               valueInput={ searchInput }
+              className="appearance-none border-none w-full
+                text-blue-700 mr-3 py-1 px-2 leading-tight focus:outline-none"
             />
-          ) }
-        </div>
+            <div>
+              <Input
+                dataTestId="ingredient-search-radio"
+                typeInput="radio"
+                idLabel="ingredient"
+                nameInput="search-radio"
+                textLabel="Ingredient"
+                handleInputChange={ this.handleRadioChange }
+              />
+              <Input
+                dataTestId="name-search-radio"
+                typeInput="radio"
+                idLabel="name"
+                nameInput="search-radio"
+                textLabel="Name"
+                handleInputChange={ this.handleRadioChange }
+              />
+              <Input
+                dataTestId="first-letter-search-radio"
+                typeInput="radio"
+                idLabel="first-letter"
+                nameInput="search-radio"
+                textLabel="First letter"
+                handleInputChange={ this.handleRadioChange }
+              />
+            </div>
+            <button
+              type="button"
+              onClick={ this.handleClick }
+              data-testid="exec-search-btn"
+            >
+              Search
+            </button>
+          </div>
+        )}
       </>
     );
   }
