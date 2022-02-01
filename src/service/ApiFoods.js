@@ -1,3 +1,4 @@
+// foods
 export function ingredientApi(ingredient) {
   return fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?i=${ingredient}`)
     .then((response) => response.json())

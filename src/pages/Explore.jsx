@@ -1,26 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Header from '../components/Header';
 
-class Explore extends Component {
-  constructor() {
-    super();
+function Explore() {
+  const showSearchBtn = false;
 
-    this.state = {
-      showSearchBtn: false,
-    };
-  }
-
-  render() {
-    const { showSearchBtn } = this.state;
-
-    return (
-      <Header
-        showSearchBtn={ showSearchBtn }
-      >
-        Explore
-      </Header>
-    );
-  }
+  return (
+    <Header
+      showSearchBtn={ showSearchBtn }
+    >
+      Explore
+    </Header>
+  );
 }
 
 export default Explore;

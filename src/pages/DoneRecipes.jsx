@@ -1,26 +1,15 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Header from '../components/Header';
 
-class DoneRecipes extends Component {
-  constructor() {
-    super();
+function DoneRecipes() {
+  const showSearchBtn = false;
 
-    this.state = {
-      showSearchBtn: false,
-    };
-  }
-
-  render() {
-    const { showSearchBtn } = this.state;
-
-    return (
-      <Header
-        showSearchBtn={ showSearchBtn }
-      >
-        Done Recipes
-      </Header>
-    );
-  }
+  return (
+    <Header
+      showSearchBtn={ showSearchBtn }
+    >
+      Done Recipes
+    </Header>
+  );
 }
-
 export default DoneRecipes;

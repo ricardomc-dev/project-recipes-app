@@ -1,26 +1,22 @@
-import React, { Component } from 'react';
+import React, { useContext } from 'react';
 import Header from '../components/Header';
+import RecipeContext from '../context/RecipesContext';
 
-class Foods extends Component {
-  constructor() {
-    super();
+function Foods() {
+  const {
+    handleClickFoods,
+  } = useContext(RecipeContext);
 
-    this.state = {
-      showSearchBtn: true,
-    };
-  }
+  const showSearchBtn = true;
 
-  render() {
-    const { showSearchBtn } = this.state;
-
-    return (
-      <Header
-        showSearchBtn={ showSearchBtn }
-      >
-        Foods
-      </Header>
-    );
-  }
+  return (
+    <Header
+      showSearchBtn={ showSearchBtn }
+      handleClick={ handleClickFoods }
+    >
+      Foods
+    </Header>
+  );
 }
 
 export default Foods;
