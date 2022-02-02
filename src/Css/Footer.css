@@ -1,8 +1,8 @@
 .footer {
   align-items: center;
   background-color: #ccc;
-  display: flex;
   bottom: 0;
+  display: flex;
   font-size: 25px;
   height: 50px;
   justify-content: space-around;
