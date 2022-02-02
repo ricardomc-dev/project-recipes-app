@@ -1,26 +1,59 @@
-import React, { Component } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
 import Header from '../components/Header';
+import RecipeContext from '../context/RecipesContext';
 
-class Foods extends Component {
-  constructor() {
-    super();
+function Foods() {
+  const [newArrayMeals, setNewArrayMeals] = useState([]);
+  const {
+    handleClickFoods,
+    arrayMeals,
+  } = useContext(RecipeContext);
 
-    this.state = {
-      showSearchBtn: true,
-    };
-  }
+  const showSearchBtn = true;
+  const history = useHistory();
 
-  render() {
-    const { showSearchBtn } = this.state;
+  useEffect(() => {
+    const ONE = 1;
+    if (arrayMeals !== null && arrayMeals.length === ONE) {
+      return history.push(`/foods/${arrayMeals[0].idMeal}`);
+    }
+  }, [arrayMeals, history]);
 
-    return (
+  useEffect(() => {
+    const TWELVE = 12;
+    if (arrayMeals !== null) {
+      return setNewArrayMeals(arrayMeals.slice(0, TWELVE));
+    }
+  }, [arrayMeals]);
+
+  return (
+    <>
       <Header
         showSearchBtn={ showSearchBtn }
+        handleClick={ handleClickFoods }
       >
         Foods
       </Header>
-    );
-  }
+      <main>
+        {newArrayMeals.map((meal, id) => (
+          <div data-testid={ `${id}-recipe-card` } key={ meal.idMeal }>
+            <Link to={ `/foods/${meal.idMeal}` }>
+              <div>
+                <img
+                  src={ `${meal.strMealThumb}/preview` }
+                  alt={ meal.strMeal }
+                  data-testid={ `${id}-card-img` }
+                />
+                <p data-testid={ `${id}-card-name` }>{meal.strMeal}</p>
+              </div>
+            </Link>
+            <br />
+          </div>
+        ))}
+      </main>
+    </>
+  );
 }
 
 export default Foods;

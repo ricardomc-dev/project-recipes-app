@@ -1,26 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Header from '../components/Header';
 
-class ExploreDksIngred extends Component {
-  constructor() {
-    super();
+function ExploreDksIngred() {
+  const showSearchBtn = false;
 
-    this.state = {
-      showSearchBtn: false,
-    };
-  }
-
-  render() {
-    const { showSearchBtn } = this.state;
-
-    return (
-      <Header
-        showSearchBtn={ showSearchBtn }
-      >
-        Explore Ingredients
-      </Header>
-    );
-  }
+  return (
+    <Header
+      showSearchBtn={ showSearchBtn }
+    >
+      Explore Ingredients
+    </Header>
+  );
 }
 
 export default ExploreDksIngred;

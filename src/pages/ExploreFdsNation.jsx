@@ -1,26 +1,16 @@
-import React, { Component } from 'react';
+import React from 'react';
 import Header from '../components/Header';
 
-class ExploreFdsNation extends Component {
-  constructor() {
-    super();
+function ExploreFdsNation() {
+  const showSearchBtn = true;
 
-    this.state = {
-      showSearchBtn: true,
-    };
-  }
-
-  render() {
-    const { showSearchBtn } = this.state;
-
-    return (
-      <Header
-        showSearchBtn={ showSearchBtn }
-      >
-        Explore Nationalities
-      </Header>
-    );
-  }
+  return (
+    <Header
+      showSearchBtn={ showSearchBtn }
+    >
+      Explore Nationalities
+    </Header>
+  );
 }
 
 export default ExploreFdsNation;
