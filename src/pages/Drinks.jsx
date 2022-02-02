@@ -1,6 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Header from '../components/Header';
+import Footer from '../components/Footer';
 import RecipeContext from '../context/RecipesContext';
 
 function Drinks() {
@@ -23,7 +24,6 @@ function Drinks() {
   useEffect(() => {
     const TWELVE = 12;
     if (arrayDrinks !== null && arrayDrinks) {
-      console.log(arrayDrinks);
       return setNewArrayDrinks(arrayDrinks.slice(0, TWELVE));
     }
   }, [arrayDrinks]);
@@ -53,6 +53,7 @@ function Drinks() {
           </div>
         ))}
       </main>
+      <Footer />
     </>
   );
 }
