@@ -13,6 +13,13 @@ export function nameDrinksApi(nome) {
     .catch((error) => error);
 }
 
+export function defaultDrinksApi() {
+  return fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=')
+    .then((response) => response.json())
+    .then((data) => data.drinks)
+    .catch((error) => error);
+}
+
 export function firstLetterDrinksApi(primeiraLetra) {
   return fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${primeiraLetra}`)
     .then((response) => response.json())

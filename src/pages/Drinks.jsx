@@ -2,12 +2,15 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import RecipeContext from '../context/RecipesContext';
+import MainDrinkScreen from '../components/MainDrinkScreen';
 
 function Drinks() {
+  const TWELVE = 12;
   const [newArrayDrinks, setNewArrayDrinks] = useState([]);
   const {
     handleClickDrinks,
     arrayDrinks,
+    showPage,
   } = useContext(RecipeContext);
 
   const showSearchBtn = true;
@@ -21,7 +24,6 @@ function Drinks() {
   }, [arrayDrinks, history]);
 
   useEffect(() => {
-    const TWELVE = 12;
     if (arrayDrinks !== null && arrayDrinks) {
       console.log(arrayDrinks);
       return setNewArrayDrinks(arrayDrinks.slice(0, TWELVE));
@@ -37,7 +39,8 @@ function Drinks() {
         Drinks
       </Header>
       <main>
-        {newArrayDrinks.map((drink, id) => (
+        { showPage && <MainDrinkScreen /> }
+        {newArrayDrinks.slice(0, TWELVE).map((drink, id) => (
           <div data-testid={ `${id}-recipe-card` } key={ drink.idDrink }>
             <Link to={ `/drinks/${drink.idDrink}` }>
               <div>

@@ -2,12 +2,17 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import RecipeContext from '../context/RecipesContext';
+import MainFoodScreen from '../components/MainFoodScreen';
 
 function Foods() {
+  const TWELVE = 12;
+
   const [newArrayMeals, setNewArrayMeals] = useState([]);
+
   const {
     handleClickFoods,
     arrayMeals,
+    showPage,
   } = useContext(RecipeContext);
 
   const showSearchBtn = true;
@@ -21,7 +26,6 @@ function Foods() {
   }, [arrayMeals, history]);
 
   useEffect(() => {
-    const TWELVE = 12;
     if (arrayMeals !== null) {
       return setNewArrayMeals(arrayMeals.slice(0, TWELVE));
     }
@@ -36,6 +40,7 @@ function Foods() {
         Foods
       </Header>
       <main>
+        { showPage && <MainFoodScreen /> }
         {newArrayMeals.map((meal, id) => (
           <div data-testid={ `${id}-recipe-card` } key={ meal.idMeal }>
             <Link to={ `/foods/${meal.idMeal}` }>

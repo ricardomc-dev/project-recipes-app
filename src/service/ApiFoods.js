@@ -13,6 +13,13 @@ export function nameApi(nome) {
     .catch((error) => error);
 }
 
+export function defaultMealsApi() {
+  return fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=')
+    .then((response) => response.json())
+    .then((data) => data.meals)
+    .catch((error) => error);
+}
+
 export function firstLetterApi(primeiraLetra) {
   return fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${primeiraLetra}`)
     .then((response) => response.json())
