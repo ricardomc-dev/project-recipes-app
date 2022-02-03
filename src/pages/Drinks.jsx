@@ -38,9 +38,7 @@ function Drinks() {
       >
         Drinks
       </Header>
-      <br />
       <FilterButtonsDrinks />
-      <br />
       <main>
         { showPage && <MainDrinkScreen /> }
         {newArrayDrinks.map((drink, id) => (
@@ -55,7 +53,6 @@ function Drinks() {
                 <p data-testid={ `${id}-card-name` }>{drink.strDrink}</p>
               </div>
             </Link>
-            <br />
           </div>
         ))}
       </main>

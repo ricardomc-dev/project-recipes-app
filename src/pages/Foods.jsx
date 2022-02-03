@@ -55,7 +55,6 @@ function Foods() {
                 <p data-testid={ `${id}-card-name` }>{meal.strMeal}</p>
               </div>
             </Link>
-            <br />
           </div>
         ))}
       </main>

@@ -63,6 +63,11 @@
 
 .filterButtons {
   display: flex;
+  margin: 10px;
+}
+
+.newList {
+  margin: 10px;
 }
 
 @keyframes shake {

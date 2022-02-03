@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import RecipeContext from '../context/RecipesContext';
+import Button from './Button';
 
 function FilterButtonsFoods() {
   const FIVE = 5;
@@ -7,8 +8,12 @@ function FilterButtonsFoods() {
 
   return (
     <div className="filterButtons">
+      <Button>
+        All
+      </Button>
       {newListFoods.slice(0, FIVE).map((categoryName) => (
         <div
+          className="newList"
           data-testid={ `${categoryName.strCategory}-category-filter` }
           key={ categoryName.strCategory }
         >
