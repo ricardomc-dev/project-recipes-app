@@ -6,12 +6,14 @@ import {
   nameApi,
   firstLetterApi,
   defaultMealsApi,
+  filterFoodButtons,
 } from '../service/ApiFoods';
 import {
   ingredientDrinksApi,
   nameDrinksApi,
   firstLetterDrinksApi,
   defaultDrinksApi,
+  filterDrinkButtons,
 } from '../service/ApiDrinks';
 
 function RecipeProvider({ children }) {
@@ -22,6 +24,8 @@ function RecipeProvider({ children }) {
   const [mealsData, setMealsData] = useState([]);
   const [drinksData, setDrinkssData] = useState([]);
   const [showPage, setShowPage] = useState(true);
+  const [newListDrinks, setNewListDrinks] = useState([]);
+  const [newListFoods, setNewListFoods] = useState([]);
 
   const verifyLength = (param) => {
     if (param === null || !param) {
@@ -42,6 +46,16 @@ function RecipeProvider({ children }) {
   const showMainPage = () => {
     setShowPage(!showPage);
   };
+
+  useEffect(() => {
+    filterDrinkButtons()
+      .then((newData) => setNewListDrinks(newData));
+  }, []);
+
+  useEffect(() => {
+    filterFoodButtons()
+      .then((newData) => setNewListFoods(newData));
+  }, []);
 
   const handleClickFoods = async () => {
     if (searchRadio === 'ingredient') {
@@ -101,6 +115,8 @@ function RecipeProvider({ children }) {
     mealsData,
     showPage,
     drinksData,
+    newListDrinks,
+    newListFoods,
   };
 
   return (

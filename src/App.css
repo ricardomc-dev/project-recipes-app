@@ -61,6 +61,10 @@
   font-weight: 900;
 }
 
+.filterButtons {
+  display: flex;
+}
+
 @keyframes shake {
 
   0% {

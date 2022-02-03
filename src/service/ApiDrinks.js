@@ -13,6 +13,7 @@ export function nameDrinksApi(nome) {
     .catch((error) => error);
 }
 
+// Carregada no iniciar da página principal de Foods
 export function defaultDrinksApi() {
   return fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=')
     .then((response) => response.json())
@@ -22,6 +23,14 @@ export function defaultDrinksApi() {
 
 export function firstLetterDrinksApi(primeiraLetra) {
   return fetch(`https://www.thecocktaildb.com/api/json/v1/1/search.php?f=${primeiraLetra}`)
+    .then((response) => response.json())
+    .then((data) => data.drinks)
+    .catch((error) => error);
+}
+
+// Retorna os botões de filtro
+export function filterDrinkButtons() {
+  return fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list')
     .then((response) => response.json())
     .then((data) => data.drinks)
     .catch((error) => error);

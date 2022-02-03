@@ -3,6 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import RecipeContext from '../context/RecipesContext';
 import MainFoodScreen from '../components/MainFoodScreen';
+import FilterButtonsFoods from '../components/FilterButtonsFoods';
 
 function Foods() {
   const TWELVE = 12;
@@ -39,6 +40,7 @@ function Foods() {
       >
         Foods
       </Header>
+      <FilterButtonsFoods />
       <main>
         { showPage && <MainFoodScreen /> }
         {newArrayMeals.map((meal, id) => (

@@ -3,6 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import Header from '../components/Header';
 import RecipeContext from '../context/RecipesContext';
 import MainDrinkScreen from '../components/MainDrinkScreen';
+import FilterButtonsDrinks from '../components/FilterButtonsDrinks';
 
 function Drinks() {
   const TWELVE = 12;
@@ -25,7 +26,6 @@ function Drinks() {
 
   useEffect(() => {
     if (arrayDrinks !== null && arrayDrinks) {
-      console.log(arrayDrinks);
       return setNewArrayDrinks(arrayDrinks.slice(0, TWELVE));
     }
   }, [arrayDrinks]);
@@ -38,6 +38,9 @@ function Drinks() {
       >
         Drinks
       </Header>
+      <br />
+      <FilterButtonsDrinks />
+      <br />
       <main>
         { showPage && <MainDrinkScreen /> }
         {newArrayDrinks.map((drink, id) => (
