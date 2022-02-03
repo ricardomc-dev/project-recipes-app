@@ -40,7 +40,7 @@ function Drinks() {
       </Header>
       <main>
         { showPage && <MainDrinkScreen /> }
-        {newArrayDrinks.slice(0, TWELVE).map((drink, id) => (
+        {newArrayDrinks.map((drink, id) => (
           <div data-testid={ `${id}-recipe-card` } key={ drink.idDrink }>
             <Link to={ `/drinks/${drink.idDrink}` }>
               <div>
