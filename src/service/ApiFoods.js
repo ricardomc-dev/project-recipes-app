@@ -13,6 +13,14 @@ export function nameApi(nome) {
     .catch((error) => error);
 }
 
+// Carregada no iniciar da página principal de Foods
+export function defaultMealsApi() {
+  return fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=')
+    .then((response) => response.json())
+    .then((data) => data.meals)
+    .catch((error) => error);
+}
+
 export function firstLetterApi(primeiraLetra) {
   return fetch(`https://www.themealdb.com/api/json/v1/1/search.php?f=${primeiraLetra}`)
     .then((response) => response.json())
@@ -22,6 +30,14 @@ export function firstLetterApi(primeiraLetra) {
 
 export function detailApi(idReceita) {
   return fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idReceita}`)
+    .then((response) => response.json())
+    .then((data) => data.meals)
+    .catch((error) => error);
+}
+
+// Retorna os botões de filtro
+export function filterFoodButtons() {
+  return fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list')
     .then((response) => response.json())
     .then((data) => data.meals)
     .catch((error) => error);
