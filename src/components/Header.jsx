@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import RecipeContext from '../context/RecipesContext';
+import RecipesContext from '../context/RecipesContext';
 
 import './Header.css';
 
@@ -17,7 +17,7 @@ function Header(props) {
     searchInput,
     setSearchInput,
     setSearchRadio,
-  } = useContext(RecipeContext);
+  } = useContext(RecipesContext);
 
   const handleInputChange = ({ target: { value } }) => {
     setSearchInput(value);
