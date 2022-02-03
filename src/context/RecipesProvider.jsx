@@ -1,11 +1,19 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import RecipeContext from './RecipesContext';
-import { ingredientApi, nameApi, firstLetterApi } from '../service/ApiFoods';
+import {
+  ingredientApi,
+  nameApi,
+  firstLetterApi,
+  defaultMealsApi,
+  filterFoodButtons,
+} from '../service/ApiFoods';
 import {
   ingredientDrinksApi,
   nameDrinksApi,
   firstLetterDrinksApi,
+  defaultDrinksApi,
+  filterDrinkButtons,
 } from '../service/ApiDrinks';
 
 function RecipeProvider({ children }) {
@@ -13,12 +21,41 @@ function RecipeProvider({ children }) {
   const [searchRadio, setSearchRadio] = useState('');
   const [arrayMeals, setArrayMeals] = useState([]);
   const [arrayDrinks, setArrayDrinks] = useState([]);
+  const [mealsData, setMealsData] = useState([]);
+  const [drinksData, setDrinkssData] = useState([]);
+  const [showPage, setShowPage] = useState(true);
+  const [newListDrinks, setNewListDrinks] = useState([]);
+  const [newListFoods, setNewListFoods] = useState([]);
 
   const verifyLength = (param) => {
     if (param === null || !param) {
       return global.alert('Sorry, we haven\'t found any recipes for these filters.');
     }
   };
+
+  useEffect(() => {
+    defaultMealsApi()
+      .then((newData) => setMealsData(newData));
+  }, []);
+
+  useEffect(() => {
+    defaultDrinksApi()
+      .then((newData) => setDrinkssData(newData));
+  }, []);
+
+  const showMainPage = () => {
+    setShowPage(!showPage);
+  };
+
+  useEffect(() => {
+    filterDrinkButtons()
+      .then((newData) => setNewListDrinks(newData));
+  }, []);
+
+  useEffect(() => {
+    filterFoodButtons()
+      .then((newData) => setNewListFoods(newData));
+  }, []);
 
   const handleClickFoods = async () => {
     if (searchRadio === 'ingredient') {
@@ -40,6 +77,7 @@ function RecipeProvider({ children }) {
       verifyLength(meals);
       setArrayMeals(meals);
     }
+    showMainPage();
   };
 
   const handleClickDrinks = async () => {
@@ -62,6 +100,7 @@ function RecipeProvider({ children }) {
       verifyLength(drinks);
       setArrayDrinks(drinks);
     }
+    showMainPage();
   };
 
   const contextValue = {
@@ -73,6 +112,11 @@ function RecipeProvider({ children }) {
     setSearchRadio,
     handleClickFoods,
     handleClickDrinks,
+    mealsData,
+    showPage,
+    drinksData,
+    newListDrinks,
+    newListFoods,
   };
 
   return (
