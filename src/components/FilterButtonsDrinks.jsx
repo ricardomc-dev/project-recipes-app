@@ -17,11 +17,9 @@ function FilterButtonsDrinks() {
           data-testid={ `${categoryName.strCategory}-category-filter` }
           key={ categoryName.strCategory }
         >
-          <button
-            type="button"
-          >
+          <Button>
             {categoryName.strCategory}
-          </button>
+          </Button>
         </div>
       ))}
     </div>

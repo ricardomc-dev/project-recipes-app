@@ -6,9 +6,15 @@ function FilterButtonsFoods() {
   const FIVE = 5;
   const { newListFoods } = useContext(RecipeContext);
 
+  const imprime = () => {
+    console.log('Imprimiu');
+  };
+
   return (
     <div className="filterButtons">
-      <Button>
+      <Button
+        handleClick={ imprime }
+      >
         All
       </Button>
       {newListFoods.slice(0, FIVE).map((categoryName) => (
@@ -17,11 +23,9 @@ function FilterButtonsFoods() {
           data-testid={ `${categoryName.strCategory}-category-filter` }
           key={ categoryName.strCategory }
         >
-          <button
-            type="button"
-          >
+          <Button>
             {categoryName.strCategory}
-          </button>
+          </Button>
         </div>
       ))}
     </div>
