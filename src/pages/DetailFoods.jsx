@@ -6,8 +6,6 @@ import { detailApi } from '../service/ApiFoods';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
-import '../Css/Detail.css';
-
 function DetailFoods({ match }) {
   const [objDetail, setObjDetail] = useState([]);
   const [recomDrink, setRecomDrink] = useState([]);
@@ -41,25 +39,26 @@ function DetailFoods({ match }) {
   if (objDetail.length === 0) return null;
 
   return (
-    <div>
+    <div className="w-full h-full flex-col items-center truncate">
       <img
         src={ objDetail[0].strMealThumb }
         alt="meal"
         data-testid="recipe-photo"
         className="w-full"
       />
-      <div>
+      <div className="w-full h-auto flex flex-col">
         <h2 data-testid="recipe-title">{ objDetail[0].strMeal }</h2>
         <button type="button" data-testid="share-btn">{shareIcon}</button>
         <button type="button" data-testid="favorite-btn">{whiteHeartIcon}</button>
       </div>
       <h4 data-testid="recipe-category">{objDetail[0].strCategory}</h4>
       <h3>Ingredients</h3>
-      <ul className="ingredient">
+      <ul className="bg-gray-200">
         { Object.entries(objDetail[0])
           .filter((item) => item[0].includes('strIngredient') && item[1] !== '')
           .map((ingredient, i) => (
             <li
+              className="ml-4"
               key={ i }
               data-testid={ `${i}-ingredient-name-and-measure` }
             >
@@ -68,7 +67,12 @@ function DetailFoods({ match }) {
           ))}
       </ul>
       <h3>Instruction</h3>
-      <p data-testid="instructions">{objDetail[0].strInstructions}</p>
+      <p
+        className="h-full w-full flex"
+        data-testid="instructions"
+      >
+        {objDetail[0].strInstructions}
+      </p>
       <h3>Video</h3>
       <iframe
         data-testid="video"
@@ -79,7 +83,7 @@ function DetailFoods({ match }) {
       />
       <h3>Recommended</h3>
       {recomDrink && (
-        <div>
+        <div className="h-full w-40 flex flex-wrap-nowrap overflow-x-scroll">
           {recomDrink.map((drink, index) => (
             <div data-testid={ `${index}-recomendation-card` } key={ drink.idDrink }>
               <Link to={ `/drinks/${drink.idDrink}` }>
@@ -89,7 +93,9 @@ function DetailFoods({ match }) {
                     alt={ drink.strDrink }
                   />
                   <p>{drink.strAlcoholic}</p>
-                  <h4>{drink.strDrink}</h4>
+                  <h4 data-testid={ `${index}-recomendation-title` }>
+                    {drink.strDrink}
+                  </h4>
                 </div>
               </Link>
               <br />
@@ -97,13 +103,18 @@ function DetailFoods({ match }) {
           ))}
         </div>
       )}
-      <button
-        data-testid="start-recipe-btn"
-        type="button"
-        // onClick={ ()=> {} }
-      >
-        Start Recipe
-      </button>
+      <div>
+        <button
+          className="w-full fixed bottom-0 bg-blue-500 hover:bg-blue-700
+          text-white font-bold
+          py-2 border border-blue-700 rounded"
+          data-testid="start-recipe-btn"
+          type="button"
+          // onClick={ ()=> {} }
+        >
+          Start Recipe
+        </button>
+      </div>
     </div>
   );
 }

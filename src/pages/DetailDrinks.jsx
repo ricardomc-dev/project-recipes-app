@@ -6,8 +6,6 @@ import { detailDrinksApi } from '../service/ApiDrinks';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 
-import '../Css/Detail.css';
-
 function DetailDrinks({ match }) {
   const [objDetail, setObjDetail] = useState([]);
   const [recomFood, setRecomFood] = useState([]);
@@ -41,60 +39,76 @@ function DetailDrinks({ match }) {
   if (objDetail.length === 0) return null;
 
   return (
-    <div>
+    <div className="w-full h-full flex-col items-center truncate">
       <img
         src={ objDetail[0].strDrinkThumb }
         alt="drink"
         data-testid="recipe-photo"
         className="w-full"
       />
-      <div>
+      <div className="w-full h-auto flex flex-col">
         <h2 data-testid="recipe-title">{ objDetail[0].strDrink }</h2>
-        <button type="button" data-testid="share-btn">{shareIcon}</button>
-        <button type="button" data-testid="favorite-btn">{whiteHeartIcon}</button>
+        <button type="button" data-testid="share-btn">{ shareIcon }</button>
+        <button type="button" data-testid="favorite-btn">{ whiteHeartIcon }</button>
+        <p data-testid="recipe-category">{ objDetail[0].strAlcoholic }</p>
       </div>
-      <h4 data-testid="recipe-category">{objDetail[0].strCategory}</h4>
+      <h4 data-testid="recipe-category">{ objDetail[0].strCategory }</h4>
       <h3>Ingredients</h3>
-      <ul>
+      <ul className="bg-gray-200">
         { Object.entries(objDetail[0])
           .filter((item) => item[0].includes('strIngredient') && item[1] !== '')
           .map((ingredient, i) => (
             <li
+              className="ml-4"
               key={ i }
               data-testid={ `${i}-ingredient-name-and-measure` }
             >
-              {ingredient[1]}
+              { ingredient[1] }
             </li>
-          ))}
+          )) }
       </ul>
       <h3>Instruction</h3>
-      <p data-testid="instructions">{objDetail[0].strInstructions}</p>
+      <span
+        className="h-full w-full flex"
+        data-testid="instructions"
+      >
+        { objDetail[0].strInstructions }
+      </span>
+
       <h3>Recommended</h3>
-      {recomFood && (
-        <div>
-          {recomFood.map((food, index) => (
-            <div data-testid={ `${index}-recomendation-card` } key={ food.idMeal }>
+      { recomFood && (
+        <div className="h-full w-20 flex flex-wrap-nowrap overflow-x-scroll">
+          { recomFood.map((food, index) => (
+            <div
+              data-testid={ `${index}-recomendation-card` }
+              key={ food.idMeal }
+            >
               <Link to={ `/foods/${food.idMeal}` }>
-                <div>
-                  <img
-                    src={ `${food.strMealThumb}/preview` }
-                    alt={ food.strMeal }
-                  />
-                  <p>{food.strAlcoholic}</p>
-                  <h4>{food.strMeal}</h4>
-                </div>
+                <img
+                  src={ `${food.strMealThumb}/preview` }
+                  alt={ food.strMeal }
+                />
+                <p>{food.strAlcoholic}</p>
+                <h4 data-testid={ `${index}-recomendation-title` }>
+                  { food.strMeal }
+                </h4>
               </Link>
               <br />
             </div>
-          ))}
+          )) }
         </div>
-      )}
-      <button
-        data-testid="start-recipe-btn"
-        type="button"
-      >
-        Start Recipe
-      </button>
+      ) }
+      <div>
+        <button
+          className="w-full fixed bottom-0 bg-blue-500 hover:bg-blue-500
+          text-white font-bold
+          py-2 border border-blue-700 rounded"
+          data-testid="start-recipe-btn"
+          type="button"
+        >
+          Start Recipe
+        </button>
+      </div>
     </div>
   );
 }
