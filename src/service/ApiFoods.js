@@ -28,6 +28,13 @@ export function firstLetterApi(primeiraLetra) {
     .catch((error) => error);
 }
 
+export function detailApi(idReceita) {
+  return fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idReceita}`)
+    .then((response) => response.json())
+    .then((data) => data.meals)
+    .catch((error) => error);
+}
+
 // Retorna os botões de filtro
 export function filterFoodButtons() {
   return fetch('https://www.themealdb.com/api/json/v1/1/list.php?c=list')
