@@ -35,3 +35,10 @@ export function filterDrinkButtons() {
     .then((data) => data.drinks)
     .catch((error) => error);
 }
+
+export function detailDrinksApi(idReceita) {
+  return fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${idReceita}`)
+    .then((response) => response.json())
+    .then((data) => data.drinks)
+    .catch((error) => error);
+}

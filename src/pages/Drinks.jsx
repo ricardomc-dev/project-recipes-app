@@ -32,7 +32,7 @@ function Drinks() {
   }, [arrayDrinks]);
 
   return (
-    <>
+    <div className="w-full h-full flex-col items-center">
       <Header
         showSearchBtn={ showSearchBtn }
         handleClick={ handleClickDrinks }
@@ -58,7 +58,7 @@ function Drinks() {
         ))}
       </main>
       <Footer />
-    </>
+    </div>
   );
 }
 
