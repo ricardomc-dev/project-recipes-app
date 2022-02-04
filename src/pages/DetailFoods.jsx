@@ -38,6 +38,16 @@ function DetailFoods({ match }) {
 
   if (objDetail.length === 0) return null;
 
+  const VINTE = 20;
+  const arrayIngred = [];
+  for (let i = 1; i <= VINTE; i += 1) {
+    if (objDetail[0][`strIngredient${i}`]) {
+      arrayIngred.push(
+        `- ${objDetail[0][`strIngredient${i}`]} - ${objDetail[0][`strMeasure${i}`]}`,
+      );
+    }
+  }
+
   return (
     <div className="w-full h-full flex-col items-center truncate">
       <img
@@ -54,17 +64,15 @@ function DetailFoods({ match }) {
       <h4 data-testid="recipe-category">{objDetail[0].strCategory}</h4>
       <h3>Ingredients</h3>
       <ul className="bg-gray-200">
-        { Object.entries(objDetail[0])
-          .filter((item) => item[0].includes('strIngredient') && item[1] !== '')
-          .map((ingredient, i) => (
-            <li
-              className="ml-4"
-              key={ i }
-              data-testid={ `${i}-ingredient-name-and-measure` }
-            >
-              {ingredient[1]}
-            </li>
-          ))}
+        {arrayIngred.map((ingredient, i) => (
+          <li
+            className="ml-4"
+            key={ i }
+            data-testid={ `${i}-ingredient-name-and-measure` }
+          >
+            {ingredient}
+          </li>
+        ))}
       </ul>
       <h3>Instruction</h3>
       <p
