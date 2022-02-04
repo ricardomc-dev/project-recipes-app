@@ -42,10 +42,3 @@ export function filterFoodButtons() {
     .then((data) => data.meals)
     .catch((error) => error);
 }
-
-export function detailApi(idReceita) {
-  return fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${idReceita}`)
-    .then((response) => response.json())
-    .then((data) => data.meals)
-    .catch((error) => error);
-}
