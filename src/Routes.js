@@ -14,6 +14,8 @@ import ExploreDksIngred from './pages/ExploreDksIngred';
 import ExploreFdsNation from './pages/ExploreFdsNation';
 import DetailFoods from './pages/DetailFoods';
 import DetailDrinks from './pages/DetailDrinks';
+import FoodsInProgress from './pages/FoodsInProgress';
+import DrinksInProgress from './pages/DrinksInProgress';
 import NotFound from './pages/NotFound';
 
 class Routes extends Component {
@@ -22,9 +24,11 @@ class Routes extends Component {
       <Switch>
         <Route exact path="/" component={ Login } />
         <Route exact path="/foods" component={ Foods } />
-        <Route path="/foods/:id" component={ DetailFoods } />
+        <Route exact path="/foods/:id" component={ DetailFoods } />
         <Route exact path="/drinks" component={ Drinks } />
-        <Route path="/drinks/:id" component={ DetailDrinks } />
+        <Route exact path="/drinks/:id" component={ DetailDrinks } />
+        <Route exact path="/foods/:id/in-progress" component={ FoodsInProgress } />
+        <Route exact path="/drinks/:id/in-progress" component={ DrinksInProgress } />
         <Route exact path="/explore" component={ Explore } />
         <Route exact path="/profile" component={ Profile } />
         <Route exact path="/explore/foods" component={ ExploreFoods } />
