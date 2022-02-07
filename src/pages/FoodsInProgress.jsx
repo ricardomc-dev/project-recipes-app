@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { detailApi } from '../service/ApiFoods';
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import Input from '../components/Input';
 
 function FoodsInProgress({ match }) {
   const [objDetail, setObjDetail] = useState([]);
@@ -54,6 +55,11 @@ function FoodsInProgress({ match }) {
             key={ i }
             data-testid={ `${i}-ingredient-step` }
           >
+            <Input
+              idLabel="checkbox"
+              typeInput="checkbox"
+            />
+            {ingredient}
             {ingredient}
           </li>
         ))}
