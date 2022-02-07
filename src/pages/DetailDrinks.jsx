@@ -1,34 +1,68 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { nameApi } from '../service/ApiFoods';
+import copy from 'clipboard-copy';
 import { detailDrinksApi } from '../service/ApiDrinks';
+import { nameApi } from '../service/ApiFoods';
+import StartContinueButton from '../components/StartContinueButton';
+import {
+  addIdToLocalSto,
+  deleteIdFromLocalSto,
+  getLocalStorageInfo } from '../service/localStorage';
+
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 function DetailDrinks({ match }) {
   const [objDetail, setObjDetail] = useState([]);
   const [recomFood, setRecomFood] = useState([]);
+  const [isLinkCopied, setIsLinkCopied] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
+  const whiteHeart = (
+    <img
+      data-testid="favorite-btn"
+      src={ whiteHeartIcon }
+      alt="whiteHeart"
+    />
+  );
+  const blackHeart = (
+    <img
+      data-testid="favorite-btn"
+      src={ blackHeartIcon }
+      alt="blackHeartIcon"
+    />
+  );
+
+  const copyToClipboard = async () => {
+    await copy(window.location.href);
+    return setIsLinkCopied(true);
+  };
 
   const { params: { id } } = match;
-  const idReceita = Number(id);
-  console.log(`idReceita: ${idReceita}`);
+  const idReceita = id;
 
   useEffect(() => {
-    const apiDrinksRequest = async () => {
+    if (localStorage.getItem('favoriteRecipes')) {
+      return setIsFavorite(getLocalStorageInfo('favoriteRecipes')
+        .some((drink) => drink.id === idReceita));
+    }
+  }, [idReceita]);
+
+  useEffect(() => {
+    const apiFoodsRequest = async () => {
       const foods = await nameApi('');
       const SIX = 6;
       if (foods !== null) {
         return setRecomFood(foods.slice(0, SIX));
       }
     };
-    apiDrinksRequest();
+    apiFoodsRequest();
   }, []);
 
   useEffect(() => {
     const apiRequest = async () => {
       const detail = await detailDrinksApi(idReceita);
-      console.log(`detail: ${detail}`);
       setObjDetail(detail);
     };
     apiRequest();
@@ -46,7 +80,27 @@ function DetailDrinks({ match }) {
     }
   }
 
-  console.log(arrayIngred);
+  const { idDrink, strCategory, strAlcoholic, strDrink,
+    strDrinkThumb } = objDetail[0];
+
+  function handleFavoriteItem() {
+    const favoriteRecipe = {
+      id: idDrink,
+      type: 'drink',
+      nationality: '',
+      category: strCategory,
+      alcoholicOrNot: strAlcoholic,
+      name: strDrink,
+      image: strDrinkThumb,
+    };
+    if (isFavorite === false) {
+      addIdToLocalSto(favoriteRecipe, 'favoriteRecipes');
+      setIsFavorite(true);
+    } else {
+      deleteIdFromLocalSto(idReceita, 'favoriteRecipes');
+      setIsFavorite(false);
+    }
+  }
 
   return (
     <div className="w-full h-full flex-col items-center truncate">
@@ -58,10 +112,21 @@ function DetailDrinks({ match }) {
       />
       <div className="w-full h-auto flex flex-col">
         <h2 data-testid="recipe-title">{ objDetail[0].strDrink }</h2>
-        <button type="button" data-testid="share-btn">{ shareIcon }</button>
-        <button type="button" data-testid="favorite-btn">{ whiteHeartIcon }</button>
-        <p data-testid="recipe-category">{ objDetail[0].strAlcoholic }</p>
+        <button
+          type="button"
+          onClick={ () => copyToClipboard() }
+        >
+          <img data-testid="share-btn" src={ shareIcon } alt="share" />
+        </button>
+        <button
+          type="button"
+          onClick={ () => handleFavoriteItem() }
+        >
+          { isFavorite ? blackHeart : whiteHeart }
+        </button>
+        { isLinkCopied && <span>Link copied!</span> }
       </div>
+      <p data-testid="recipe-category">{ objDetail[0].strAlcoholic }</p>
       <h4 data-testid="recipe-category">{ objDetail[0].strCategory }</h4>
       <h3>Ingredients</h3>
       <ul className="bg-gray-200">
@@ -76,15 +141,14 @@ function DetailDrinks({ match }) {
         ))}
       </ul>
       <h3>Instruction</h3>
-      <span
+      <p
         className="h-full w-full flex"
         data-testid="instructions"
       >
         { objDetail[0].strInstructions }
-      </span>
-
+      </p>
       <h3>Recommended</h3>
-      { recomFood && (
+      {recomFood && (
         <div className="h-full w-20 flex flex-wrap-nowrap overflow-x-scroll">
           { recomFood.map((food, index) => (
             <div
@@ -96,27 +160,16 @@ function DetailDrinks({ match }) {
                   src={ `${food.strMealThumb}/preview` }
                   alt={ food.strMeal }
                 />
-                <p>{food.strAlcoholic}</p>
                 <h4 data-testid={ `${index}-recomendation-title` }>
                   { food.strMeal }
                 </h4>
               </Link>
               <br />
             </div>
-          )) }
+          ))}
         </div>
-      ) }
-      <div>
-        <button
-          className="w-full fixed bottom-0 bg-blue-500 hover:bg-blue-500
-          text-white font-bold
-          py-2 border border-blue-700 rounded"
-          data-testid="start-recipe-btn"
-          type="button"
-        >
-          Start Recipe
-        </button>
-      </div>
+      )}
+      <StartContinueButton />
     </div>
   );
 }
