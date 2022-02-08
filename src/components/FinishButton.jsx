@@ -21,7 +21,7 @@ function FinishButton() {
           text-white font-bold py-2 border border-blue-700 rounded"
         data-testid="finish-recipe-btn"
         type="button"
-        onClick={ () => { history.push(`${pathname}/done-recipes`); } }
+        onClick={ () => { history.push('/done-recipes'); } }
       >
         Finish Recipe
       </button>
