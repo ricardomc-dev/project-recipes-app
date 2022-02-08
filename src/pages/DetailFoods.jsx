@@ -108,9 +108,9 @@ function DetailFoods({ match }) {
         src={ `${objDetail[0].strMealThumb}/preview` }
         alt="meal"
         data-testid="recipe-photo"
-        className="w-full, photoConfig"
+        className="w-full photoConfig"
       />
-      <div className="w-full h-auto flex flex-col">
+      <div className="w-full h-auto flex flex-row">
         <h2 data-testid="recipe-title">{ objDetail[0].strMeal }</h2>
         <button
           type="button"
@@ -141,7 +141,7 @@ function DetailFoods({ match }) {
       </ul>
       <h3>Instruction</h3>
       <p
-        className="h-full w-full flex"
+        className="bg-gray-200"
         data-testid="instructions"
       >
         {objDetail[0].strInstructions}

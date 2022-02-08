@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import copy from 'clipboard-copy';
+// import useLocalStorage from '../service/useLocalStorage';
 import Input from '../components/Input';
 import { detailApi } from '../service/ApiFoods';
-import { nameDrinksApi } from '../service/ApiDrinks';
 import FinishButton from '../components/FinishButton';
 import {
   addIdToLocalSto,
@@ -17,11 +16,13 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 function FoodsInProgress({ match }) {
   const [objDetail, setObjDetail] = useState([]);
-  const [recomDrink, setRecomDrink] = useState([]);
   const [isLinkCopied, setIsLinkCopied] = useState(false);
   const { params: { id } } = match;
   const idReceita = id;
   const [isFavorite, setIsFavorite] = useState(false);
+  // const [key, setKey] = useLocalStorage('favoriteRecipes');
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  // console.log(key);
   const whiteHeart = (
     <img
       data-testid="favorite-btn"
@@ -50,17 +51,6 @@ function FoodsInProgress({ match }) {
   }, [idReceita]);
 
   useEffect(() => {
-    const apiDrinksRequest = async () => {
-      const drinks = await nameDrinksApi('');
-      const SIX = 6;
-      if (drinks !== null) {
-        return setRecomDrink(drinks.slice(0, SIX));
-      }
-    };
-    apiDrinksRequest();
-  }, []);
-
-  useEffect(() => {
     const apiRequest = async () => {
       const detail = await detailApi(idReceita);
       setObjDetail(detail);
@@ -75,7 +65,7 @@ function FoodsInProgress({ match }) {
   for (let i = 1; i <= VINTE; i += 1) {
     if (objDetail[0][`strIngredient${i}`]) {
       arrayIngred.push(
-        `- ${objDetail[0][`strIngredient${i}`]} - ${objDetail[0][`strMeasure${i}`]}`,
+        ` ${objDetail[0][`strIngredient${i}`]} - ${objDetail[0][`strMeasure${i}`]}`,
       );
     }
   }
@@ -102,15 +92,29 @@ function FoodsInProgress({ match }) {
     }
   }
 
+  function handleButtonDisable() {
+    const arrCheckBox = document.getElementsByClassName('checked');
+    if (arrCheckBox.length === arrayIngred.length) {
+      return setIsButtonDisabled(false);
+    }
+    setIsButtonDisabled(true);
+  }
+
+  function handleCheckbox({ target }) {
+    const labelText = document.getElementById(target.value).nextSibling;
+    labelText.classList.toggle('checked');
+    handleButtonDisable();
+  }
+
   return (
     <div className="w-full h-full flex-col items-center truncate">
       <img
-        src={ `${objDetail[0].strMealThumb}/preview` }
+        src={ `${objDetail[0].strMealThumb}` }
         alt="meal"
         data-testid="recipe-photo"
-        className="w-full, photoConfig"
+        className="w-full photoConfig"
       />
-      <div className="w-full h-auto flex flex-col">
+      <div className="w-full h-auto flex flex-row">
         <h2 data-testid="recipe-title">{ objDetail[0].strMeal }</h2>
         <button
           type="button"
@@ -128,63 +132,35 @@ function FoodsInProgress({ match }) {
       </div>
       <h4 data-testid="recipe-category">{objDetail[0].strCategory}</h4>
       <h3>Ingredients</h3>
-      <ul className="bg-gray-200">
+      <section className="bg-gray-200">
         {arrayIngred.map((ingredient, index) => (
-          <li
+          <div
             className="ml-4"
             key={ index }
             data-testid={ `${index}-ingredient-step` }
           >
             <Input
-              idLabel="checkbox"
+              data-testid={ `${index}-ingredient-step` }
               typeInput="checkbox"
+              idLabel={ ingredient }
+              textLabel={ ingredient }
+              valueInput={ ingredient }
+              nameInput={ ingredient }
+              handleInputChange={ (event) => handleCheckbox(event) }
             />
-            {ingredient}
-          </li>
+          </div>
         ))}
-      </ul>
+      </section>
       <h3>Instruction</h3>
       <p
-        className="h-full w-full flex"
+        className="h-full w-full flex-wrap bg-gray-200"
         data-testid="instructions"
       >
         {objDetail[0].strInstructions}
       </p>
-      <h3>Video</h3>
-      <iframe
-        data-testid="video"
-        title="video"
-        width="360"
-        height="240"
-        src={ objDetail[0].strYoutube.replace('watch?v=', 'embed/') }
-      />
-      <h3>Recommended</h3>
-      { recomDrink && (
-        <div className="h-full w-40 flex flex-wrap-nowrap overflow-x-scroll">
-          { recomDrink.map((drink, index) => (
-            <div
-              data-testid={ `${index}-recomendation-card` }
-              key={ drink.idDrink }
-            >
-              <Link to={ `/drinks/${drink.idDrink}` }>
-                <div>
-                  <img
-                    src={ `${drink.strDrinkThumb}/preview` }
-                    alt={ drink.strDrink }
-                  />
-                  <p>{drink.strAlcoholic}</p>
-                  <h4 data-testid={ `${index}-recomendation-title` }>
-                    {drink.strDrink}
-                  </h4>
-                </div>
-              </Link>
-              <br />
-            </div>
-          )) }
-        </div>
-      ) }
       <FinishButton
         data-testid="finish-recipe-btn"
+        isDisabled={ isButtonDisabled }
       />
     </div>
   );

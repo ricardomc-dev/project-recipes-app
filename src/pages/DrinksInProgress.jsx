@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import copy from 'clipboard-copy';
 import Input from '../components/Input';
 import { detailDrinksApi } from '../service/ApiDrinks';
-import { nameApi } from '../service/ApiFoods';
 import {
   addIdToLocalSto,
   deleteIdFromLocalSto,
@@ -17,9 +15,9 @@ import FinishButton from '../components/FinishButton';
 
 function DrinksInProgress({ match }) {
   const [objDetail, setObjDetail] = useState([]);
-  const [recomFood, setRecomFood] = useState([]);
   const [isLinkCopied, setIsLinkCopied] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const whiteHeart = (
     <img
       data-testid="favorite-btn"
@@ -51,17 +49,6 @@ function DrinksInProgress({ match }) {
   }, [idReceita]);
 
   useEffect(() => {
-    const apiFoodsRequest = async () => {
-      const foods = await nameApi('');
-      const SIX = 6;
-      if (foods !== null) {
-        return setRecomFood(foods.slice(0, SIX));
-      }
-    };
-    apiFoodsRequest();
-  }, []);
-
-  useEffect(() => {
     const apiRequest = async () => {
       const detail = await detailDrinksApi(idReceita);
       setObjDetail(detail);
@@ -76,7 +63,7 @@ function DrinksInProgress({ match }) {
   for (let i = 1; i <= QUINZE; i += 1) {
     if (objDetail[0][`strIngredient${i}`]) {
       arrayIngred.push(
-        `- ${objDetail[0][`strIngredient${i}`]} - ${objDetail[0][`strMeasure${i}`]}`,
+        ` ${objDetail[0][`strIngredient${i}`]} - ${objDetail[0][`strMeasure${i}`]}`,
       );
     }
   }
@@ -103,15 +90,29 @@ function DrinksInProgress({ match }) {
     }
   }
 
+  function handleButtonDisable() {
+    const arrCheckBox = document.getElementsByClassName('checked');
+    if (arrCheckBox.length === arrayIngred.length) {
+      return setIsButtonDisabled(false);
+    }
+    setIsButtonDisabled(true);
+  }
+
+  function handleCheckbox({ target }) {
+    const labelText = document.getElementById(target.value).nextSibling;
+    labelText.classList.toggle('checked');
+    handleButtonDisable();
+  }
+
   return (
     <div className="w-full h-full flex-col items-center truncate">
       <img
         src={ `${objDetail[0].strDrinkThumb}/preview` }
         alt="drink"
         data-testid="recipe-photo"
-        className="w-full, photoConfig"
+        className="w-full photoConfig"
       />
-      <div className="w-full h-auto flex flex-col">
+      <div className="w-full h-auto flex flex-row">
         <h2 data-testid="recipe-title">{ objDetail[0].strDrink }</h2>
         <button
           type="button"
@@ -134,51 +135,36 @@ function DrinksInProgress({ match }) {
       <p data-testid="recipe-category">{ objDetail[0].strAlcoholic }</p>
       <h4 data-testid="recipe-category">{ objDetail[0].strCategory }</h4>
       <h3>Ingredients</h3>
-      <ul className="bg-gray-200">
+      <section className="bg-gray-200">
         {arrayIngred.map((ingredient, index) => (
-          <li
+          <div
             className="ml-4"
             key={ index }
             data-testid={ `${index}-ingredient-step` }
           >
             <Input
-              idLabel="checkbox"
+              data-testid={ `${index}-ingredient-step` }
               typeInput="checkbox"
+              idLabel={ ingredient }
+              textLabel={ ingredient }
+              valueInput={ ingredient }
+              nameInput={ ingredient }
+              handleInputChange={ (event) => handleCheckbox(event) }
             />
-            {ingredient}
-          </li>
+          </div>
         ))}
-      </ul>
+      </section>
       <h3>Instruction</h3>
       <p
-        className="h-full w-full flex"
+        className="h-full w-full flex-wrap bg-gray-200"
         data-testid="instructions"
       >
         { objDetail[0].strInstructions }
       </p>
-      <h3>Recommended</h3>
-      {recomFood && (
-        <div className="h-full w-20 flex flex-wrap-nowrap overflow-x-scroll">
-          { recomFood.map((food, index) => (
-            <div
-              data-testid={ `${index}-recomendation-card` }
-              key={ food.idMeal }
-            >
-              <Link to={ `/foods/${food.idMeal}` }>
-                <img
-                  src={ `${food.strMealThumb}/preview` }
-                  alt={ food.strMeal }
-                />
-                <h4 data-testid={ `${index}-recomendation-title` }>
-                  { food.strMeal }
-                </h4>
-              </Link>
-              <br />
-            </div>
-          ))}
-        </div>
-      )}
-      <FinishButton />
+      <FinishButton
+        data-testid="finish-recipe-btn"
+        isDisabled={ isButtonDisabled }
+      />
     </div>
   );
 }

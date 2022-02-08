@@ -4,10 +4,10 @@ export function addIdToLocalSto(obj, localStoKey) {
   return localStorage.setItem(localStoKey, JSON.stringify(idsFavorites));
 }
 
-// export function addInProgressRecipes(id, ingredList) {
-//   const progress = localStorage.getItem(ingredList);
-//   return localStorage.setItem(JSON.stringify(progress));
-// }
+export function addInProgressRecipes(id, ingredList) {
+  const progress = localStorage.getItem(ingredList);
+  return localStorage.setItem(JSON.stringify(progress));
+}
 
 export function deleteIdFromLocalSto(id, localStoKey) {
   const arrID = localStorage.getItem(localStoKey);

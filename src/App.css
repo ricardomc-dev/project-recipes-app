@@ -13,8 +13,8 @@
 }
 
 .photoConfig {
+  background-size: cover;
   display: flex;
-  height: 200px;
 }
 
 .filterButtons {
@@ -49,6 +49,10 @@
 .rocksGlass {
   animation: shake 1s infinite ease;
   max-height: 80vh;
+}
+
+.checked {
+  text-decoration: line-through;
 }
 
 /*

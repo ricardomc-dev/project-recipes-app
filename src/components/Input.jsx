@@ -12,15 +12,12 @@ class Input extends Component {
       handleInputChange,
       typeInput,
       valueInput,
-      className,
-      checked,
+      classInput,
       onClick,
     } = this.props;
     return (
       <label htmlFor={ idLabel }>
-        { textLabel }
         <input
-          checked={ checked }
           data-testid={ dataTestId }
           id={ idLabel }
           name={ nameInput }
@@ -28,9 +25,10 @@ class Input extends Component {
           onChange={ handleInputChange }
           type={ typeInput }
           value={ valueInput }
-          className={ className }
+          className={ classInput }
           onClick={ onClick }
         />
+        <span>{ textLabel }</span>
       </label>
     );
   }
@@ -46,8 +44,7 @@ Input.propTypes = {
   valueInput: PropTypes.string,
   idLabel: PropTypes.string,
   textLabel: PropTypes.string,
-  className: PropTypes.string,
-  checked: PropTypes.bool,
+  classInput: PropTypes.string,
 };
 
 Input.defaultProps = {
@@ -57,8 +54,7 @@ Input.defaultProps = {
   dataTestId: '',
   idLabel: '',
   textLabel: '',
-  className: '',
-  checked: false,
+  classInput: '',
   handleInputChange: () => {},
   onClick: () => {},
 };
