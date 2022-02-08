@@ -19,6 +19,8 @@ function FoodsInProgress({ match }) {
   const [objDetail, setObjDetail] = useState([]);
   const [recomDrink, setRecomDrink] = useState([]);
   const [isLinkCopied, setIsLinkCopied] = useState(false);
+  const { params: { id } } = match;
+  const idReceita = id;
   const [isFavorite, setIsFavorite] = useState(false);
   const whiteHeart = (
     <img
@@ -35,13 +37,10 @@ function FoodsInProgress({ match }) {
     />
   );
 
-  const copyToClipboard = async () => {
-    await copy(window.location.href);
+  const copyToClipboard = () => {
+    copy(`http://localhost:3000/foods/${idReceita}`);
     return setIsLinkCopied(true);
   };
-
-  const { params: { id } } = match;
-  const idReceita = id;
 
   useEffect(() => {
     if (localStorage.getItem('favoriteRecipes')) {

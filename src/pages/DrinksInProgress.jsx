@@ -34,14 +34,14 @@ function DrinksInProgress({ match }) {
       alt="blackHeartIcon"
     />
   );
-
-  const copyToClipboard = async () => {
-    await copy(window.location.href);
-    return setIsLinkCopied(true);
-  };
-
   const { params: { id } } = match;
   const idReceita = id;
+
+  const copyToClipboard = () => {
+    copy(`http://localhost:3000/drinks/${idReceita}`);
+
+    return setIsLinkCopied(true);
+  };
 
   useEffect(() => {
     if (localStorage.getItem('favoriteRecipes')) {
