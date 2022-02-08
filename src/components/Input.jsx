@@ -13,11 +13,14 @@ class Input extends Component {
       typeInput,
       valueInput,
       className,
+      checked,
+      onClick,
     } = this.props;
     return (
       <label htmlFor={ idLabel }>
         { textLabel }
         <input
+          checked={ checked }
           data-testid={ dataTestId }
           id={ idLabel }
           name={ nameInput }
@@ -26,6 +29,7 @@ class Input extends Component {
           type={ typeInput }
           value={ valueInput }
           className={ className }
+          onClick={ onClick }
         />
       </label>
     );
@@ -38,10 +42,12 @@ Input.propTypes = {
   typeInput: PropTypes.string.isRequired,
   nameInput: PropTypes.string,
   handleInputChange: PropTypes.func,
+  onClick: PropTypes.func,
   valueInput: PropTypes.string,
   idLabel: PropTypes.string,
   textLabel: PropTypes.string,
   className: PropTypes.string,
+  checked: PropTypes.bool,
 };
 
 Input.defaultProps = {
@@ -52,7 +58,9 @@ Input.defaultProps = {
   idLabel: '',
   textLabel: '',
   className: '',
+  checked: false,
   handleInputChange: () => {},
+  onClick: () => {},
 };
 
 export default Input;

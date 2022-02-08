@@ -12,6 +12,11 @@
   width: 320px;
 }
 
+.photoConfig {
+  height: 200px;
+  display: flex;
+}
+
 .login-container button {
   background-color: darkgreen;
   color: black;

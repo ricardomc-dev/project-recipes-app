@@ -1,21 +1,69 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import copy from 'clipboard-copy';
+import Input from '../components/Input';
 import { detailApi } from '../service/ApiFoods';
+import { nameDrinksApi } from '../service/ApiDrinks';
+import FinishButton from '../components/FinishButton';
+import {
+  addIdToLocalSto,
+  deleteIdFromLocalSto,
+  getLocalStorageInfo } from '../service/localStorage';
+
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
-import Input from '../components/Input';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 function FoodsInProgress({ match }) {
   const [objDetail, setObjDetail] = useState([]);
+  const [recomDrink, setRecomDrink] = useState([]);
+  const [isLinkCopied, setIsLinkCopied] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
+  const whiteHeart = (
+    <img
+      data-testid="favorite-btn"
+      src={ whiteHeartIcon }
+      alt="whiteHeart"
+    />
+  );
+  const blackHeart = (
+    <img
+      data-testid="favorite-btn"
+      src={ blackHeartIcon }
+      alt="blackHeartIcon"
+    />
+  );
+
+  const copyToClipboard = async () => {
+    await copy(window.location.href);
+    return setIsLinkCopied(true);
+  };
 
   const { params: { id } } = match;
-  const idReceita = Number(id);
-  console.log(`idReceita: ${idReceita}`);
+  const idReceita = id;
+
+  useEffect(() => {
+    if (localStorage.getItem('favoriteRecipes')) {
+      return setIsFavorite(getLocalStorageInfo('favoriteRecipes')
+        .some((meal) => meal.id === idReceita));
+    }
+  }, [idReceita]);
+
+  useEffect(() => {
+    const apiDrinksRequest = async () => {
+      const drinks = await nameDrinksApi('');
+      const SIX = 6;
+      if (drinks !== null) {
+        return setRecomDrink(drinks.slice(0, SIX));
+      }
+    };
+    apiDrinksRequest();
+  }, []);
 
   useEffect(() => {
     const apiRequest = async () => {
       const detail = await detailApi(idReceita);
-      console.log(`detail: ${detail}`);
       setObjDetail(detail);
     };
     apiRequest();
@@ -33,55 +81,112 @@ function FoodsInProgress({ match }) {
     }
   }
 
+  const { idMeal, strCategory, strMeal, strArea,
+    strMealThumb } = objDetail[0];
+
+  function handleFavoriteItem() {
+    const favoriteRecipe = {
+      id: idMeal,
+      type: 'food',
+      nationality: strArea,
+      category: strCategory,
+      alcoholicOrNot: '',
+      name: strMeal,
+      image: strMealThumb,
+    };
+    if (isFavorite === false) {
+      addIdToLocalSto(favoriteRecipe, 'favoriteRecipes');
+      setIsFavorite(true);
+    } else {
+      deleteIdFromLocalSto(idReceita, 'favoriteRecipes');
+      setIsFavorite(false);
+    }
+  }
+
   return (
     <div className="w-full h-full flex-col items-center truncate">
       <img
-        src={ objDetail[0].strMealThumb }
+        src={ `${objDetail[0].strMealThumb}/preview` }
         alt="meal"
         data-testid="recipe-photo"
-        className="w-full"
+        className="w-full, photoConfig"
       />
       <div className="w-full h-auto flex flex-col">
         <h2 data-testid="recipe-title">{ objDetail[0].strMeal }</h2>
-        <button type="button" data-testid="share-btn">{shareIcon}</button>
-        <button type="button" data-testid="favorite-btn">{whiteHeartIcon}</button>
+        <button
+          type="button"
+          onClick={ () => copyToClipboard() }
+        >
+          <img data-testid="share-btn" src={ shareIcon } alt="share" />
+        </button>
+        <button
+          type="button"
+          onClick={ () => handleFavoriteItem() }
+        >
+          { isFavorite ? blackHeart : whiteHeart }
+        </button>
+        { isLinkCopied && <span>Link copied!</span> }
       </div>
       <h4 data-testid="recipe-category">{objDetail[0].strCategory}</h4>
       <h3>Ingredients</h3>
       <ul className="bg-gray-200">
-        {arrayIngred.map((ingredient, i) => (
+        {arrayIngred.map((ingredient, index) => (
           <li
             className="ml-4"
-            key={ i }
-            data-testid={ `${i}-ingredient-step` }
+            key={ index }
+            data-testid={ `${index}-ingredient-step` }
           >
             <Input
               idLabel="checkbox"
               typeInput="checkbox"
             />
             {ingredient}
-            {ingredient}
           </li>
         ))}
       </ul>
       <h3>Instruction</h3>
-      <span
+      <p
         className="h-full w-full flex"
         data-testid="instructions"
       >
         {objDetail[0].strInstructions}
-      </span>
-      <div>
-        <button
-          className="w-full fixed bottom-0 bg-blue-500 hover:bg-blue-700
-          text-white font-bold
-          py-2 border border-blue-700 rounded"
-          data-testid="finish-recipe-btn"
-          type="button"
-        >
-          Finish Recipe
-        </button>
-      </div>
+      </p>
+      <h3>Video</h3>
+      <iframe
+        data-testid="video"
+        title="video"
+        width="360"
+        height="240"
+        src={ objDetail[0].strYoutube.replace('watch?v=', 'embed/') }
+      />
+      <h3>Recommended</h3>
+      { recomDrink && (
+        <div className="h-full w-40 flex flex-wrap-nowrap overflow-x-scroll">
+          { recomDrink.map((drink, index) => (
+            <div
+              data-testid={ `${index}-recomendation-card` }
+              key={ drink.idDrink }
+            >
+              <Link to={ `/drinks/${drink.idDrink}` }>
+                <div>
+                  <img
+                    src={ `${drink.strDrinkThumb}/preview` }
+                    alt={ drink.strDrink }
+                  />
+                  <p>{drink.strAlcoholic}</p>
+                  <h4 data-testid={ `${index}-recomendation-title` }>
+                    {drink.strDrink}
+                  </h4>
+                </div>
+              </Link>
+              <br />
+            </div>
+          )) }
+        </div>
+      ) }
+      <FinishButton
+        data-testid="finish-recipe-btn"
+      />
     </div>
   );
 }
