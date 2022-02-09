@@ -3,12 +3,27 @@ import { Link } from 'react-router-dom';
 import RecipeContext from '../context/RecipesContext';
 
 function MainFoodScreen() {
-  const { mealsData } = useContext(RecipeContext);
+  const { filtedMeals } = useContext(RecipeContext);
   const TWELVE = 12;
+  // const history = useHistory();
+
+  // useEffect(() => {
+  //   const ONE = 1;
+  //   if (arrayMeals !== null && arrayMeals.length === ONE) {
+  //     return history.push(`/foods/${arrayMeals[0].idMeal}`);
+  //   }
+  // }, [arrayMeals, history]);
+
+  // useEffect(() => {
+  //   const TWELVE = 12;
+  //   if (filtedMeals !== null && filtedMeals > TWELVE) {
+  //     return setFiltedMeals(filtedMeals.slice(0, TWELVE));
+  //   }
+  // }, [filtedMeals]);
 
   return (
     <main className="flex flex-wrap justify-evenly">
-      {mealsData.slice(0, TWELVE).map((meal, id) => (
+      {filtedMeals.slice(0, TWELVE).map((meal, id) => (
         <div
           className=" mb-4 drop-shadow-xl rounded-md"
           data-testid={ `${id}-recipe-card` }

@@ -73,18 +73,23 @@ function Header(props) {
       </div>
 
       { showInput && (
-        <div>
-          <Input
-            dataTestId="search-input"
-            idLabel="searchInput"
-            nameInput="searchInput"
-            placeholderInput="Search Recipe"
-            handleInputChange={ handleInputChange }
-            typeInput="text"
-            valueInput={ searchInput }
-          />
+        <div className="flex flex-col center bg-gray-200">
           <div>
             <Input
+              classInput="w-5/6 m-3 border rounded border-gray-500"
+              dataTestId="search-input"
+              idLabel="searchInput"
+              nameInput="searchInput"
+              placeholderInput="Search Recipe"
+              handleInputChange={ handleInputChange }
+              typeInput="text"
+              valueInput={ searchInput }
+            />
+          </div>
+          <div>
+            <Input
+              classInput="checked:bg-gray-900
+                checked:border-transparent m-3"
               dataTestId="ingredient-search-radio"
               typeInput="radio"
               idLabel="ingredient"
@@ -93,6 +98,8 @@ function Header(props) {
               handleInputChange={ handleRadioChange }
             />
             <Input
+              classInput="checked:bg-gray-900
+                checked:border-transparent m-3"
               dataTestId="name-search-radio"
               typeInput="radio"
               idLabel="name"
@@ -101,6 +108,8 @@ function Header(props) {
               handleInputChange={ handleRadioChange }
             />
             <Input
+              classInput="checked:bg-gray-900
+                checked:border-transparent m-3"
               dataTestId="first-letter-search-radio"
               typeInput="radio"
               idLabel="first-letter"
@@ -109,13 +118,17 @@ function Header(props) {
               handleInputChange={ handleRadioChange }
             />
           </div>
-          <button
-            type="button"
-            onClick={ handleClick }
-            data-testid="exec-search-btn"
-          >
-            Search
-          </button>
+          <div>
+            <button
+              className="bg-gray-400 text-white font-bold
+              border rounded w-24 text-center m-3 p-2"
+              type="button"
+              onClick={ handleClick }
+              data-testid="exec-search-btn"
+            >
+              Search
+            </button>
+          </div>
         </div>
       )}
     </>

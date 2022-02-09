@@ -4,11 +4,21 @@ import Button from './Button';
 
 function FilterButtonsFoods() {
   const FIVE = 5;
-  const { newListFoods } = useContext(RecipeContext);
+  const {
+    arrayMeals,
+    filtedMeals,
+    newListFoods,
+    setFiltedMeals } = useContext(RecipeContext);
 
-  const imprime = () => {
-    console.log('Imprimiu');
-  };
+  function filterByCategory(cat) {
+    if (filtedMeals.every((item) => item.strCategory === cat)) {
+      return setFiltedMeals(arrayMeals);
+    }
+    if (cat) {
+      return setFiltedMeals(arrayMeals.filter((recipe) => recipe.strCategory === cat));
+    }
+    setFiltedMeals(arrayMeals);
+  }
 
   return (
     <div className="flex flex-wrap m-4">
@@ -17,7 +27,8 @@ function FilterButtonsFoods() {
           border rounded w-24 text-center m-1"
       >
         <Button
-          handleClick={ imprime }
+          dataTestId="All-category-filter"
+          handleClick={ () => filterByCategory() }
         >
           All
         </Button>
@@ -26,10 +37,12 @@ function FilterButtonsFoods() {
         <div
           className="bg-indigo-500 text-white font-bold
             border rounded w-24 text-center m-1"
-          data-testid={ `${categoryName.strCategory}-category-filter` }
           key={ categoryName.strCategory }
         >
-          <Button>
+          <Button
+            dataTestId={ `${categoryName.strCategory}-category-filter` }
+            handleClick={ () => filterByCategory(categoryName.strCategory) }
+          >
             {categoryName.strCategory}
           </Button>
         </div>

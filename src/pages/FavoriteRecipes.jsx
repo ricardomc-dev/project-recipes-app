@@ -12,11 +12,11 @@ import blackHeartIcon from '../images/blackHeartIcon.svg';
 function FavoriteRecipes() {
   const showSearchBtn = false;
   const [favRecipes, setFavRecipes] = useLocalStorage('favoriteRecipes');
-  const [filterRecipes, setFilterRecipes] = useState(favRecipes);
+  const [filtedRecipes, setFiltedRecipes] = useState(favRecipes);
   const [isLinkCopied, setIsLinkCopied] = useState(false);
 
   useEffect(() => {
-    setFilterRecipes(favRecipes);
+    setFiltedRecipes(favRecipes);
   }, [favRecipes]);
 
   const copyToClipboard = async (string) => {
@@ -29,11 +29,10 @@ function FavoriteRecipes() {
   }
 
   function filterByType(type) {
-    console.log(type);
     if (type) {
-      return setFilterRecipes(favRecipes.filter((recipe) => recipe.type === type));
+      return setFiltedRecipes(favRecipes.filter((recipe) => recipe.type === type));
     }
-    setFilterRecipes(favRecipes);
+    setFiltedRecipes(favRecipes);
   }
 
   return (
@@ -45,27 +44,33 @@ function FavoriteRecipes() {
       </Header>
       <div className="filterButtons">
         <Button
+          classNameStyle="bg-indigo-500 text-white font-bold
+            border rounded w-24 text-center m-1"
           dataTestId="filter-by-all-btn"
           handleClick={ () => filterByType() }
         >
           All
         </Button>
         <Button
+          classNameStyle="bg-indigo-500 text-white font-bold
+            border rounded w-24 text-center m-1"
           dataTestId="filter-by-food-btn"
           handleClick={ () => filterByType('food') }
         >
           Food
         </Button>
         <Button
+          classNameStyle="bg-indigo-500 text-white font-bold
+            border rounded w-24 text-center m-1"
           dataTestId="filter-by-drink-btn"
           handleClick={ () => filterByType('drink') }
         >
           Drinks
         </Button>
       </div>
-      { filterRecipes && (
+      { filtedRecipes && (
         <div className="flex flex-col items-center">
-          { filterRecipes.map((recipe, index) => (
+          { filtedRecipes.map((recipe, index) => (
             recipe.type === 'drink'
               ? (
                 <div
