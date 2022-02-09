@@ -8,7 +8,7 @@ function StartContinueButton() {
   return (
     <div>
       <button
-        className="w-full fixed bottom-0 bg-blue-500 hover:bg-blue-700
+        className="w-full fixed bottom-0 bg-blue-700 hover:bg-blue-700
           text-white font-bold py-2 border border-blue-700 rounded"
         data-testid="start-recipe-btn"
         type="button"

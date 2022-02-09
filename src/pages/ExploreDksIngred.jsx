@@ -12,7 +12,9 @@ function ExploreDksIngred() {
       >
         Explore Ingredients
       </Header>
-      <Footer />
+      <div className="footerExplorer">
+        <Footer />
+      </div>
     </>
   );
 }

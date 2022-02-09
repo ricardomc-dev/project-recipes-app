@@ -10,15 +10,17 @@ function Explore() {
 
   return (
     <>
-      <Header
-        showSearchBtn={ showSearchBtn }
-      >
-        Explore
-      </Header>
-      <main className="flex flex-col content-center">
+      <div>
+        <Header
+          showSearchBtn={ showSearchBtn }
+        >
+          Explore
+        </Header>
+      </div>
+      <main className="flex flex-col items-center mt-20">
         <Button
-          classNameStyle="m-14 bg-indigo-500 text-white font-bold
-          text-2xl border rounded w-60 h-16 text-center"
+          classNameStyle="m-14 bg-blue-700 text-white font-bold
+          text-2xl border rounded-full w-60 h-16 text-center"
           dataTestId="explore-foods"
           typeBtn="button"
           handleClick={ () => { history.push('/explore/foods'); } }
@@ -26,8 +28,8 @@ function Explore() {
           Explore Foods
         </Button>
         <Button
-          classNameStyle="m-14 bg-indigo-500 text-white font-bold
-          text-2xl border rounded w-60 h-16 text-center"
+          classNameStyle="m-14 bg-blue-700 text-white font-bold
+          text-2xl border rounded-full w-60 h-16 text-center"
           dataTestId="explore-drinks"
           typeBtn="button"
           handleClick={ () => { history.push('/explore/drinks'); } }
@@ -35,7 +37,9 @@ function Explore() {
           Explore Drinks
         </Button>
       </main>
-      <Footer />
+      <div className="footerExplorer">
+        <Footer />
+      </div>
     </>
   );
 }

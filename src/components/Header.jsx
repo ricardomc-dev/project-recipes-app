@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import RecipesContext from '../context/RecipesContext';
 
-import './Header.css';
+import '../Css/Header.css';
 
 import Input from './Input';
 import profileIcon from '../images/profileIcon.svg';
@@ -54,6 +54,7 @@ function Header(props) {
           { redirect && <Redirect to="/profile" />}
         </button>
         <h1
+          className="text-2xl font-bold"
           data-testid="page-title"
         >
           {children}
@@ -73,10 +74,14 @@ function Header(props) {
       </div>
 
       { showInput && (
-        <div className="flex flex-col center bg-gray-200">
+        <div
+          className="flex items-center flex-col bg-gray-100"
+        >
           <div>
             <Input
-              classInput="w-5/6 m-3 border rounded border-gray-500"
+              classInput="placeholder:italic placeholder:text-slate-400 w-full mt-3 px-5
+              border rounded border-gray-500 border border-slate-300 rounded-md
+              py-1 pl-1 pr-20 shadow-sm"
               dataTestId="search-input"
               idLabel="searchInput"
               nameInput="searchInput"
@@ -86,10 +91,8 @@ function Header(props) {
               valueInput={ searchInput }
             />
           </div>
-          <div>
+          <div className="w-full flex justify-evenly">
             <Input
-              classInput="checked:bg-gray-900
-                checked:border-transparent m-3"
               dataTestId="ingredient-search-radio"
               typeInput="radio"
               idLabel="ingredient"
@@ -98,8 +101,6 @@ function Header(props) {
               handleInputChange={ handleRadioChange }
             />
             <Input
-              classInput="checked:bg-gray-900
-                checked:border-transparent m-3"
               dataTestId="name-search-radio"
               typeInput="radio"
               idLabel="name"
@@ -108,8 +109,6 @@ function Header(props) {
               handleInputChange={ handleRadioChange }
             />
             <Input
-              classInput="checked:bg-gray-900
-                checked:border-transparent m-3"
               dataTestId="first-letter-search-radio"
               typeInput="radio"
               idLabel="first-letter"
@@ -120,8 +119,9 @@ function Header(props) {
           </div>
           <div>
             <button
-              className="bg-gray-400 text-white font-bold
-              border rounded w-24 text-center m-3 p-2"
+              className="rounded-full bg-transparent hover:bg-gray-500 text-white
+              font-semibold hover:text-white py-1 px-4 border
+              hover:border-transparent rounded bg-gray-800 m-2"
               type="button"
               onClick={ handleClick }
               data-testid="exec-search-btn"

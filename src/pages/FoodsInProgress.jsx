@@ -38,6 +38,14 @@ function FoodsInProgress({ match }) {
     />
   );
 
+  const buttonShareIcon = (
+    <img
+      data-testid="share-btn"
+      src={ shareIcon }
+      alt="share"
+    />
+  );
+
   const copyToClipboard = () => {
     copy(`http://localhost:3000/foods/${idReceita}`);
     return setIsLinkCopied(true);
@@ -107,57 +115,67 @@ function FoodsInProgress({ match }) {
   }
 
   return (
-    <div className="w-full h-full flex-col items-center truncate">
+    <div>
       <img
         src={ `${objDetail[0].strMealThumb}` }
         alt="meal"
         data-testid="recipe-photo"
-        className="w-full photoConfig"
       />
-      <div className="w-full h-auto flex flex-row">
-        <h2 data-testid="recipe-title">{ objDetail[0].strMeal }</h2>
-        <button
-          type="button"
-          onClick={ () => copyToClipboard() }
-        >
-          <img data-testid="share-btn" src={ shareIcon } alt="share" />
-        </button>
-        <button
-          type="button"
-          onClick={ () => handleFavoriteItem() }
-        >
-          { isFavorite ? blackHeart : whiteHeart }
-        </button>
-        { isLinkCopied && <span>Link copied!</span> }
-      </div>
-      <h4 data-testid="recipe-category">{objDetail[0].strCategory}</h4>
-      <h3>Ingredients</h3>
-      <section className="bg-gray-200">
-        {arrayIngred.map((ingredient, index) => (
-          <div
-            className="ml-4"
-            key={ index }
-            data-testid={ `${index}-ingredient-step` }
+      <div>
+        <div className="w-full flex flex-row">
+          <h2
+            data-testid="recipe-title"
           >
-            <Input
-              data-testid={ `${index}-ingredient-step` }
-              typeInput="checkbox"
-              idLabel={ ingredient }
-              textLabel={ ingredient }
-              valueInput={ ingredient }
-              nameInput={ ingredient }
-              handleInputChange={ (event) => handleCheckbox(event) }
-            />
+            { objDetail[0].strMeal }
+          </h2>
+          <div className="w-full flex flex-row justify-end ml-4">
+            <button
+              type="button"
+              onClick={ () => copyToClipboard() }
+            >
+              { buttonShareIcon }
+            </button>
+            <button
+              type="button"
+              onClick={ () => handleFavoriteItem() }
+            >
+              { isFavorite ? blackHeart : whiteHeart }
+            </button>
+            { isLinkCopied && <span>Link copied!</span> }
           </div>
-        ))}
-      </section>
-      <h3>Instruction</h3>
-      <p
-        className="h-full w-full flex-wrap bg-gray-200"
-        data-testid="instructions"
-      >
-        {objDetail[0].strInstructions}
-      </p>
+        </div>
+        <h4 data-testid="recipe-category">{objDetail[0].strCategory}</h4>
+        <br />
+        <h3 className="font-medium">Ingredients</h3>
+        <section className="bg-gray-300 mt-2 mb-2">
+          {arrayIngred.map((ingredient, index) => (
+            <div
+              className="ml-4"
+              key={ index }
+              data-testid={ `${index}-ingredient-step` }
+            >
+              <Input
+                data-testid={ `${index}-ingredient-step` }
+                typeInput="checkbox"
+                idLabel={ ingredient }
+                textLabel={ ingredient }
+                valueInput={ ingredient }
+                nameInput={ ingredient }
+                handleInputChange={ (event) => handleCheckbox(event) }
+              />
+            </div>
+          ))}
+        </section>
+        <br />
+        <h3 className="font-medium">Instruction</h3>
+        <p
+          className="bg-gray-200"
+          data-testid="instructions"
+        >
+          {objDetail[0].strInstructions}
+        </p>
+      </div>
+      <br />
       <FinishButton
         data-testid="finish-recipe-btn"
         isDisabled={ isButtonDisabled }

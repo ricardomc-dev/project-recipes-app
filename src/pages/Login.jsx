@@ -83,7 +83,7 @@ class Login extends Component {
           <Button
             classNameStyle="rounded-full bg-transparent hover:bg-gray-500 text-white
             font-semibold hover:text-white py-3 px-10 border border-gray-00
-            hover:border-transparent rounded bg-gray-800 "
+            hover:border-transparent rounded bg-gray-800"
             dataTestId="login-submit-btn"
             disabled={ disabled }
             handleClick={ this.handleClick }

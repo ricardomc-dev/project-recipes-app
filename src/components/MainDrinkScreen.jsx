@@ -10,7 +10,7 @@ function MainFoodScreen() {
     <main className="flex flex-wrap justify-evenly">
       {filtedDrinks.slice(0, TWELVE).map((drink, id) => (
         <div
-          className=" mb-4 drop-shadow-xl rounded-md"
+          className="bg-white flex justify-center my-4 max-w-2/4 shadow-lg rounded-md"
           data-testid={ `${id}-recipe-card` }
           key={ drink.idDrink }
         >
@@ -22,7 +22,12 @@ function MainFoodScreen() {
               width="150"
               height="150"
             />
-            <p data-testid={ `${id}-card-name` }>{drink.strDrink}</p>
+            <p
+              className="flex justify-center m-1"
+              data-testid={ `${id}-card-name` }
+            >
+              {drink.strDrink}
+            </p>
           </Link>
           <br />
         </div>

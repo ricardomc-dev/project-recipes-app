@@ -21,10 +21,10 @@ function FilterButtonsDrinks() {
   }
 
   return (
-    <div className="flex flex-wrap m-4">
+    <div className="flex flex-wrap justify-center mt-3">
       <div
-        className="bg-indigo-500 text-white font-bold
-          border rounded w-24 text-center m-1"
+        className="bg-blue-700 text-white
+          border rounded w-40 text-center m-1"
       >
         <Button
           dataTestId="All-category-filter"
@@ -35,8 +35,8 @@ function FilterButtonsDrinks() {
       </div>
       {newListDrinks.slice(0, FIVE).map((categoryName) => (
         <div
-          className="bg-indigo-500 text-white font-bold
-            border rounded w-24 text-center m-1"
+          className="flex justify-center bg-blue-700 text-white
+          border rounded w-40 text-center m-1 p-1"
           key={ categoryName.strCategory }
         >
           <Button

@@ -12,11 +12,6 @@
   width: 320px;
 }
 
-.photoConfig {
-  background-size: cover;
-  display: flex;
-}
-
 /* .filterButtons {
   display: flex;
   justify-content: space-between;
