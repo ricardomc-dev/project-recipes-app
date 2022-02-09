@@ -17,12 +17,12 @@
   display: flex;
 }
 
-.filterButtons {
+/* .filterButtons {
   display: flex;
   justify-content: space-between;
   padding-left: 50px;
   padding-right: 50px;
-}
+} */
 
 .login-container button {
   background-color: darkgreen;
@@ -77,9 +77,9 @@
   font-weight: 900;
 }
 
-.newList {
+/* .newList {
   margin: 10px;
-}
+} */
 
 @keyframes shake {
 

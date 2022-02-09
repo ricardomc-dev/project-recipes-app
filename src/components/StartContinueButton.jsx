@@ -1,18 +1,9 @@
 import React from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 function StartContinueButton() {
   const history = useHistory();
   const { location: { pathname } } = history;
-  const { id } = useParams();
-
-  console.log(pathname, id);
-
-  // function redirectByCategory(path) {
-  //   if (path === `/foods/${id}`) {
-  //     return history.push(`${path}/in-progress`);
-  //   }
-  // }
 
   return (
     <div>

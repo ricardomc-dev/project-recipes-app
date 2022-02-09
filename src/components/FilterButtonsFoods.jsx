@@ -11,15 +11,21 @@ function FilterButtonsFoods() {
   };
 
   return (
-    <div className="filterButtons">
-      <Button
-        handleClick={ imprime }
+    <div className="flex flex-wrap m-4">
+      <div
+        className="bg-indigo-500 text-white font-bold
+          border rounded w-24 text-center m-1"
       >
-        All
-      </Button>
+        <Button
+          handleClick={ imprime }
+        >
+          All
+        </Button>
+      </div>
       {newListFoods.slice(0, FIVE).map((categoryName) => (
         <div
-          className="newList"
+          className="bg-indigo-500 text-white font-bold
+            border rounded w-24 text-center m-1"
           data-testid={ `${categoryName.strCategory}-category-filter` }
           key={ categoryName.strCategory }
         >

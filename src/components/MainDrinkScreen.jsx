@@ -7,23 +7,27 @@ function MainFoodScreen() {
   const TWELVE = 12;
 
   return (
-    <>
+    <main className="flex flex-wrap justify-evenly">
       {drinksData.slice(0, TWELVE).map((drink, id) => (
-        <div data-testid={ `${id}-recipe-card` } key={ drink.idDrink }>
+        <div
+          className=" mb-4 drop-shadow-xl rounded-md"
+          data-testid={ `${id}-recipe-card` }
+          key={ drink.idDrink }
+        >
           <Link to={ `/drinks/${drink.idDrink}` }>
-            <div>
-              <img
-                src={ `${drink.strDrinkThumb}/preview` }
-                alt={ drink.strDrink }
-                data-testid={ `${id}-card-img` }
-              />
-              <p data-testid={ `${id}-card-name` }>{drink.strDrink}</p>
-            </div>
+            <img
+              src={ `${drink.strDrinkThumb}/preview` }
+              alt={ drink.strDrink }
+              data-testid={ `${id}-card-img` }
+              width="150"
+              height="150"
+            />
+            <p data-testid={ `${id}-card-name` }>{drink.strDrink}</p>
           </Link>
           <br />
         </div>
       ))}
-    </>
+    </main>
   );
 }
 
