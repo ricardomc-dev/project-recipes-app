@@ -1,8 +1,12 @@
 import React from 'react';
+// import useLocalStorage from '../service/useLocalStorage';
 import Header from '../components/Header';
 import Button from '../components/Button';
 
 function DoneRecipes() {
+  // const [key, setKey] = useLocalStorage('favoriteRecipes');
+
+  console.log(key);
   const showSearchBtn = false;
 
   return (

@@ -1,20 +1,56 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
+import copy from 'clipboard-copy';
+import Input from '../components/Input';
 import { detailDrinksApi } from '../service/ApiDrinks';
+import {
+  addIdToLocalSto,
+  deleteIdFromLocalSto,
+  getLocalStorageInfo } from '../service/localStorage';
+
 import shareIcon from '../images/shareIcon.svg';
 import whiteHeartIcon from '../images/whiteHeartIcon.svg';
+import blackHeartIcon from '../images/blackHeartIcon.svg';
+import FinishButton from '../components/FinishButton';
 
 function DrinksInProgress({ match }) {
   const [objDetail, setObjDetail] = useState([]);
-
+  const [isLinkCopied, setIsLinkCopied] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
+  const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const whiteHeart = (
+    <img
+      data-testid="favorite-btn"
+      src={ whiteHeartIcon }
+      alt="whiteHeart"
+    />
+  );
+  const blackHeart = (
+    <img
+      data-testid="favorite-btn"
+      src={ blackHeartIcon }
+      alt="blackHeartIcon"
+    />
+  );
   const { params: { id } } = match;
-  const idReceita = Number(id);
-  console.log(`idReceita: ${idReceita}`);
+  const idReceita = id;
+
+  const copyToClipboard = () => {
+    copy(`http://localhost:3000/drinks/${idReceita}`);
+
+    return setIsLinkCopied(true);
+  };
+
+  useEffect(() => {
+    if (localStorage.getItem('favoriteRecipes')) {
+      return setIsFavorite(getLocalStorageInfo('favoriteRecipes')
+        .some((drink) => drink.id === idReceita));
+    }
+  }, [idReceita]);
 
   useEffect(() => {
     const apiRequest = async () => {
       const detail = await detailDrinksApi(idReceita);
-      console.log(`detail: ${detail}`);
       setObjDetail(detail);
     };
     apiRequest();
@@ -27,56 +63,108 @@ function DrinksInProgress({ match }) {
   for (let i = 1; i <= QUINZE; i += 1) {
     if (objDetail[0][`strIngredient${i}`]) {
       arrayIngred.push(
-        `- ${objDetail[0][`strIngredient${i}`]} - ${objDetail[0][`strMeasure${i}`]}`,
+        ` ${objDetail[0][`strIngredient${i}`]} - ${objDetail[0][`strMeasure${i}`]}`,
       );
     }
+  }
+
+  const { idDrink, strCategory, strAlcoholic, strDrink,
+    strDrinkThumb } = objDetail[0];
+
+  function handleFavoriteItem() {
+    const favoriteRecipe = {
+      id: idDrink,
+      type: 'drink',
+      nationality: '',
+      category: strCategory,
+      alcoholicOrNot: strAlcoholic,
+      name: strDrink,
+      image: strDrinkThumb,
+    };
+    if (isFavorite === false) {
+      addIdToLocalSto(favoriteRecipe, 'favoriteRecipes');
+      setIsFavorite(true);
+    } else {
+      deleteIdFromLocalSto(idReceita, 'favoriteRecipes');
+      setIsFavorite(false);
+    }
+  }
+
+  function handleButtonDisable() {
+    const arrCheckBox = document.getElementsByClassName('checked');
+    if (arrCheckBox.length === arrayIngred.length) {
+      return setIsButtonDisabled(false);
+    }
+    setIsButtonDisabled(true);
+  }
+
+  function handleCheckbox({ target }) {
+    const labelText = document.getElementById(target.value).nextSibling;
+    labelText.classList.toggle('checked');
+    handleButtonDisable();
   }
 
   return (
     <div className="w-full h-full flex-col items-center truncate">
       <img
-        src={ objDetail[0].strDrinkThumb }
+        src={ `${objDetail[0].strDrinkThumb}/preview` }
         alt="drink"
         data-testid="recipe-photo"
-        className="w-full"
+        className="w-full photoConfig"
       />
-      <div className="w-full h-auto flex flex-col">
+      <div className="w-full h-auto flex flex-row">
         <h2 data-testid="recipe-title">{ objDetail[0].strDrink }</h2>
-        <button type="button" data-testid="share-btn">{ shareIcon }</button>
-        <button type="button" data-testid="favorite-btn">{ whiteHeartIcon }</button>
-        <p data-testid="recipe-category">{ objDetail[0].strAlcoholic }</p>
+        <button
+          type="button"
+          onClick={ () => copyToClipboard() }
+        >
+          <img
+            data-testid="share-btn"
+            src={ shareIcon }
+            alt="share"
+          />
+        </button>
+        <button
+          type="button"
+          onClick={ () => handleFavoriteItem() }
+        >
+          { isFavorite ? blackHeart : whiteHeart }
+        </button>
+        { isLinkCopied && <span>Link copied!</span> }
       </div>
+      <p data-testid="recipe-category">{ objDetail[0].strAlcoholic }</p>
       <h4 data-testid="recipe-category">{ objDetail[0].strCategory }</h4>
       <h3>Ingredients</h3>
-      <ul className="bg-gray-200">
-        {arrayIngred.map((ingredient, i) => (
-          <li
+      <section className="bg-gray-200">
+        {arrayIngred.map((ingredient, index) => (
+          <div
             className="ml-4"
-            key={ i }
-            data-testid={ `${i}-ingredient-step` }
+            key={ index }
+            data-testid={ `${index}-ingredient-step` }
           >
-            {ingredient}
-          </li>
+            <Input
+              data-testid={ `${index}-ingredient-step` }
+              typeInput="checkbox"
+              idLabel={ ingredient }
+              textLabel={ ingredient }
+              valueInput={ ingredient }
+              nameInput={ ingredient }
+              handleInputChange={ (event) => handleCheckbox(event) }
+            />
+          </div>
         ))}
-      </ul>
+      </section>
       <h3>Instruction</h3>
-      <span
-        className="h-full w-full flex"
+      <p
+        className="h-full w-full flex-wrap bg-gray-200"
         data-testid="instructions"
       >
         { objDetail[0].strInstructions }
-      </span>
-      <div>
-        <button
-          className="w-full fixed bottom-0 bg-blue-500 hover:bg-blue-500
-          text-white font-bold
-          py-2 border border-blue-700 rounded"
-          data-testid="finish-recipe-btn"
-          type="button"
-        >
-          Finish Recipe
-        </button>
-      </div>
+      </p>
+      <FinishButton
+        data-testid="finish-recipe-btn"
+        isDisabled={ isButtonDisabled }
+      />
     </div>
   );
 }

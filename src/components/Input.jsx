@@ -12,11 +12,11 @@ class Input extends Component {
       handleInputChange,
       typeInput,
       valueInput,
-      className,
+      classInput,
+      onClick,
     } = this.props;
     return (
       <label htmlFor={ idLabel }>
-        { textLabel }
         <input
           data-testid={ dataTestId }
           id={ idLabel }
@@ -25,8 +25,10 @@ class Input extends Component {
           onChange={ handleInputChange }
           type={ typeInput }
           value={ valueInput }
-          className={ className }
+          className={ classInput }
+          onClick={ onClick }
         />
+        <span>{ textLabel }</span>
       </label>
     );
   }
@@ -38,10 +40,11 @@ Input.propTypes = {
   typeInput: PropTypes.string.isRequired,
   nameInput: PropTypes.string,
   handleInputChange: PropTypes.func,
+  onClick: PropTypes.func,
   valueInput: PropTypes.string,
   idLabel: PropTypes.string,
   textLabel: PropTypes.string,
-  className: PropTypes.string,
+  classInput: PropTypes.string,
 };
 
 Input.defaultProps = {
@@ -51,8 +54,9 @@ Input.defaultProps = {
   dataTestId: '',
   idLabel: '',
   textLabel: '',
-  className: '',
+  classInput: '',
   handleInputChange: () => {},
+  onClick: () => {},
 };
 
 export default Input;

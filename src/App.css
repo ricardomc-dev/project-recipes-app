@@ -12,6 +12,18 @@
   width: 320px;
 }
 
+.photoConfig {
+  background-size: cover;
+  display: flex;
+}
+
+.filterButtons {
+  display: flex;
+  justify-content: space-between;
+  padding-left: 50px;
+  padding-right: 50px;
+}
+
 .login-container button {
   background-color: darkgreen;
   color: black;
@@ -39,6 +51,10 @@
   max-height: 80vh;
 }
 
+.checked {
+  text-decoration: line-through;
+}
+
 /*
 #iceLeft {
   animation: clink .8s infinite ease;
@@ -59,11 +75,6 @@
   font-family: Montserrat , sans-serif;
   font-size: 3em;
   font-weight: 900;
-}
-
-.filterButtons {
-  display: flex;
-  margin: 10px;
 }
 
 .newList {

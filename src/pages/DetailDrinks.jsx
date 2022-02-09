@@ -105,12 +105,12 @@ function DetailDrinks({ match }) {
   return (
     <div className="w-full h-full flex-col items-center truncate">
       <img
-        src={ objDetail[0].strDrinkThumb }
+        src={ `${objDetail[0].strDrinkThumb}/preview` }
         alt="drink"
         data-testid="recipe-photo"
-        className="w-full"
+        className="w-full photoConfig"
       />
-      <div className="w-full h-auto flex flex-col">
+      <div className="w-full h-auto flex flex-row">
         <h2 data-testid="recipe-title">{ objDetail[0].strDrink }</h2>
         <button
           type="button"
