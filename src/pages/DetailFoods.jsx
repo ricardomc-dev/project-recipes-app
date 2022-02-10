@@ -116,8 +116,9 @@ function DetailFoods({ match }) {
         src={ `${objDetail[0].strMealThumb}` }
         alt="meal"
         data-testid="recipe-photo"
+        className="mb-2"
       />
-      <div>
+      <div className="ml-2 mr-2">
         <div className="w-full flex flex-row">
           <h2
             data-testid="recipe-title"
@@ -143,7 +144,9 @@ function DetailFoods({ match }) {
         </div>
         <h4 data-testid="recipe-category">{objDetail[0].strCategory}</h4>
         <br />
-        <h3 className="font-medium">Ingredients</h3>
+      </div>
+      <div>
+        <h3 className="font-medium ml-2">Ingredients</h3>
         <ul className="bg-gray-300 mt-2 mb-2">
           {arrayIngred.map((ingredient, i) => (
             <li
@@ -156,15 +159,17 @@ function DetailFoods({ match }) {
           ))}
         </ul>
         <br />
-        <h3 className="font-medium">Instruction</h3>
-        <p
-          className="bg-gray-200"
-          data-testid="instructions"
-        >
-          {objDetail[0].strInstructions}
-        </p>
-        <br />
-        <h3 className="mb-1 font-medium">Video</h3>
+        <div className="ml-2 mr-2">
+          <h3 className="font-medium">Instruction</h3>
+          <p
+            className="bg-gray-200"
+            data-testid="instructions"
+          >
+            {objDetail[0].strInstructions}
+          </p>
+          <br />
+        </div>
+        <h3 className="mb-1 font-medium ml-2">Video</h3>
         <iframe
           data-testid="video"
           title="video"
@@ -173,33 +178,35 @@ function DetailFoods({ match }) {
           src={ objDetail[0].strYoutube.replace('watch?v=', 'embed/') }
         />
         <br />
-        <h3 className="mb-1 font-medium">Recommended</h3>
-        { recomDrink && (
-          <div className="h-full flex flex-wrap-nowrap overflow-x-scroll">
-            { recomDrink.map((drink, index) => (
-              <div
-                data-testid={ `${index}-recomendation-card` }
-                key={ drink.idDrink }
-                className="mr-2"
-              >
-                <Link to={ `/drinks/${drink.idDrink}` }>
-                  <div>
-                    <img
-                      src={ `${drink.strDrinkThumb}/preview` }
-                      alt={ drink.strDrink }
-                      className="rounded-md"
-                    />
-                    <p>{drink.strAlcoholic}</p>
-                    <h4 data-testid={ `${index}-recomendation-title` }>
-                      {drink.strDrink}
-                    </h4>
-                  </div>
-                </Link>
-                <br />
-              </div>
-            )) }
-          </div>
-        ) }
+        <div className="ml-2 mr-2">
+          <h3 className="mb-1 font-medium">Recommended</h3>
+          { recomDrink && (
+            <div className="h-full flex flex-wrap-nowrap overflow-x-scroll">
+              { recomDrink.map((drink, index) => (
+                <div
+                  data-testid={ `${index}-recomendation-card` }
+                  key={ drink.idDrink }
+                  className="mr-2"
+                >
+                  <Link to={ `/drinks/${drink.idDrink}` }>
+                    <div>
+                      <img
+                        src={ `${drink.strDrinkThumb}` }
+                        alt={ drink.strDrink }
+                        className="rounded-full h-12"
+                      />
+                      <p>{drink.strAlcoholic}</p>
+                      <h4 data-testid={ `${index}-recomendation-title` }>
+                        {drink.strDrink}
+                      </h4>
+                    </div>
+                  </Link>
+                  <br />
+                </div>
+              )) }
+            </div>
+          ) }
+        </div>
       </div>
       <br />
       <StartContinueButton />

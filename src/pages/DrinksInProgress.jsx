@@ -121,8 +121,9 @@ function DrinksInProgress({ match }) {
         src={ `${objDetail[0].strDrinkThumb}` }
         alt="drink"
         data-testid="recipe-photo"
+        className="mb-2"
       />
-      <div>
+      <div className="ml-2 mr-2">
         <div className="w-full flex flex-row">
           <h2
             data-testid="recipe-title"
@@ -133,6 +134,7 @@ function DrinksInProgress({ match }) {
             <button
               type="button"
               onClick={ () => copyToClipboard() }
+              className="mr-4"
             >
               { buttonShareIcon }
             </button>
@@ -148,27 +150,29 @@ function DrinksInProgress({ match }) {
         <p data-testid="recipe-category">{ objDetail[0].strAlcoholic }</p>
         <h4 data-testid="recipe-category">{ objDetail[0].strCategory }</h4>
         <br />
-        <h3 className="font-medium">Ingredients</h3>
-        <section className="bg-gray-300 mt-2 mb-2">
-          {arrayIngred.map((ingredient, index) => (
-            <div
-              className="ml-4"
-              key={ index }
+      </div>
+      <h3 className="font-medium ml-2">Ingredients</h3>
+      <section className="bg-gray-300 mt-2 mb-2">
+        {arrayIngred.map((ingredient, index) => (
+          <div
+            className="ml-4"
+            key={ index }
+            data-testid={ `${index}-ingredient-step` }
+          >
+            <Input
               data-testid={ `${index}-ingredient-step` }
-            >
-              <Input
-                data-testid={ `${index}-ingredient-step` }
-                typeInput="checkbox"
-                idLabel={ ingredient }
-                textLabel={ ingredient }
-                valueInput={ ingredient }
-                nameInput={ ingredient }
-                handleInputChange={ (event) => handleCheckbox(event) }
-              />
-            </div>
-          ))}
-        </section>
-        <br />
+              typeInput="checkbox"
+              idLabel={ ingredient }
+              textLabel={ ingredient }
+              valueInput={ ingredient }
+              nameInput={ ingredient }
+              handleInputChange={ (event) => handleCheckbox(event) }
+            />
+          </div>
+        ))}
+      </section>
+      <br />
+      <div className="ml-2 mr-2">
         <h3 className="font-medium">Instruction</h3>
         <p
           className="bg-gray-200"
