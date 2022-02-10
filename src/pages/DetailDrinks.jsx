@@ -170,7 +170,7 @@ function DetailDrinks({ match }) {
         <br />
         <h3 className="mb-1 font-medium">Recommended</h3>
         {recomFood && (
-          <div className="h-full flex flex-wrap-nowrap overflow-x-scroll">
+          <div className="h-full w-24 flex flex-wrap-nowrap overflow-x-scroll">
             { recomFood.map((food, index) => (
               <div
                 data-testid={ `${index}-recomendation-card` }

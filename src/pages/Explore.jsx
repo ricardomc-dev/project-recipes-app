@@ -37,9 +37,7 @@ function Explore() {
           Explore Drinks
         </Button>
       </main>
-      <div className="footerExplorer">
-        <Footer />
-      </div>
+      <Footer />
     </>
   );
 }

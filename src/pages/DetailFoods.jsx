@@ -181,7 +181,7 @@ function DetailFoods({ match }) {
         <div className="ml-2 mr-2">
           <h3 className="mb-1 font-medium">Recommended</h3>
           { recomDrink && (
-            <div className="h-full flex flex-wrap-nowrap overflow-x-scroll">
+            <div className="h-full w-32 flex flex-wrap-nowrap overflow-x-scroll">
               { recomDrink.map((drink, index) => (
                 <div
                   data-testid={ `${index}-recomendation-card` }

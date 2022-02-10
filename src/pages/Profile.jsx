@@ -15,9 +15,7 @@ function Profile() {
       {/* <button data-testid="profile-done-btn" type="button">Profile</button>
       <button data-testid="profile-favorite-btn" type="button">Profile</button>
       <button data-testid="profile-logout-btn" type="button">Profile</button> */}
-      <div className="footerExplorer">
-        <Footer />
-      </div>
+      <Footer />
     </>
   );
 }
