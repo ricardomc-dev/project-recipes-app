@@ -4,8 +4,8 @@ import RecipeContext from './RecipesContext';
 import {
   ingredientApi,
   nameApi,
-  firstLetterApi,
   defaultMealsApi,
+  firstLetterApi,
   filterFoodButtons,
 } from '../service/ApiFoods';
 import {
@@ -17,15 +17,19 @@ import {
 } from '../service/ApiDrinks';
 
 function RecipeProvider({ children }) {
+  // Login
   const [searchInput, setSearchInput] = useState('');
   const [searchRadio, setSearchRadio] = useState('');
+  // Foods
   const [arrayMeals, setArrayMeals] = useState([]);
-  const [arrayDrinks, setArrayDrinks] = useState([]);
-  const [mealsData, setMealsData] = useState([]);
-  const [drinksData, setDrinkssData] = useState([]);
-  const [showPage, setShowPage] = useState(true);
-  const [newListDrinks, setNewListDrinks] = useState([]);
+  const [filtedMeals, setFiltedMeals] = useState([]);
   const [newListFoods, setNewListFoods] = useState([]);
+  // Drinks
+  const [arrayDrinks, setArrayDrinks] = useState([]);
+  const [filtedDrinks, setFiltedDrinks] = useState([]);
+  const [newListDrinks, setNewListDrinks] = useState([]);
+
+  const [showPage, setShowPage] = useState(true);
 
   const verifyLength = (param) => {
     if (param === null || !param) {
@@ -33,15 +37,28 @@ function RecipeProvider({ children }) {
     }
   };
 
+  console.log(arrayMeals.length, arrayDrinks.length);
+  console.log(filtedMeals);
+
   useEffect(() => {
-    defaultMealsApi()
-      .then((newData) => setMealsData(newData));
+    async function apiMealRequest() {
+      const meals = await defaultMealsApi();
+      verifyLength(meals);
+      setArrayMeals(meals);
+    }
+    apiMealRequest();
+    async function apiDrinkRequest() {
+      const drinks = await defaultDrinksApi();
+      verifyLength(drinks);
+      setArrayDrinks(drinks);
+    }
+    apiDrinkRequest();
   }, []);
 
   useEffect(() => {
-    defaultDrinksApi()
-      .then((newData) => setDrinkssData(newData));
-  }, []);
+    setFiltedMeals(arrayMeals);
+    setFiltedDrinks(arrayDrinks);
+  }, [arrayMeals, arrayDrinks]);
 
   const showMainPage = () => {
     setShowPage(!showPage);
@@ -108,13 +125,15 @@ function RecipeProvider({ children }) {
     searchRadio,
     arrayMeals,
     arrayDrinks,
+    filtedMeals,
+    filtedDrinks,
+    setFiltedMeals,
     setSearchInput,
     setSearchRadio,
     handleClickFoods,
     handleClickDrinks,
-    mealsData,
+    setFiltedDrinks,
     showPage,
-    drinksData,
     newListDrinks,
     newListFoods,
   };

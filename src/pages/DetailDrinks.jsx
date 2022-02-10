@@ -34,6 +34,14 @@ function DetailDrinks({ match }) {
     />
   );
 
+  const buttonShareIcon = (
+    <img
+      data-testid="share-btn"
+      src={ shareIcon }
+      alt="share"
+    />
+  );
+
   const copyToClipboard = async () => {
     await copy(window.location.href);
     return setIsLinkCopied(true);
@@ -103,72 +111,86 @@ function DetailDrinks({ match }) {
   }
 
   return (
-    <div className="w-full h-full flex-col items-center truncate">
+    <div>
       <img
-        src={ `${objDetail[0].strDrinkThumb}/preview` }
+        src={ `${objDetail[0].strDrinkThumb}` }
         alt="drink"
         data-testid="recipe-photo"
-        className="w-full photoConfig"
       />
-      <div className="w-full h-auto flex flex-row">
-        <h2 data-testid="recipe-title">{ objDetail[0].strDrink }</h2>
-        <button
-          type="button"
-          onClick={ () => copyToClipboard() }
-        >
-          <img data-testid="share-btn" src={ shareIcon } alt="share" />
-        </button>
-        <button
-          type="button"
-          onClick={ () => handleFavoriteItem() }
-        >
-          { isFavorite ? blackHeart : whiteHeart }
-        </button>
-        { isLinkCopied && <span>Link copied!</span> }
-      </div>
-      <p data-testid="recipe-category">{ objDetail[0].strAlcoholic }</p>
-      <h4 data-testid="recipe-category">{ objDetail[0].strCategory }</h4>
-      <h3>Ingredients</h3>
-      <ul className="bg-gray-200">
-        {arrayIngred.map((ingredient, i) => (
-          <li
-            className="ml-4"
-            key={ i }
-            data-testid={ `${i}-ingredient-name-and-measure` }
+      <div>
+        <div className="w-full flex flex-row">
+          <h2
+            data-testid="recipe-title"
           >
-            {ingredient}
-          </li>
-        ))}
-      </ul>
-      <h3>Instruction</h3>
-      <p
-        className="h-full w-full flex"
-        data-testid="instructions"
-      >
-        { objDetail[0].strInstructions }
-      </p>
-      <h3>Recommended</h3>
-      {recomFood && (
-        <div className="h-full w-20 flex flex-wrap-nowrap overflow-x-scroll">
-          { recomFood.map((food, index) => (
-            <div
-              data-testid={ `${index}-recomendation-card` }
-              key={ food.idMeal }
+            { objDetail[0].strDrink }
+          </h2>
+          <div className="w-full flex flex-row justify-end ml-4">
+            <button
+              type="button"
+              onClick={ () => copyToClipboard() }
+              className="mr-4"
             >
-              <Link to={ `/foods/${food.idMeal}` }>
-                <img
-                  src={ `${food.strMealThumb}/preview` }
-                  alt={ food.strMeal }
-                />
-                <h4 data-testid={ `${index}-recomendation-title` }>
-                  { food.strMeal }
-                </h4>
-              </Link>
-              <br />
-            </div>
-          ))}
+              { buttonShareIcon }
+            </button>
+            <button
+              type="button"
+              onClick={ () => handleFavoriteItem() }
+            >
+              { isFavorite ? blackHeart : whiteHeart }
+            </button>
+            { isLinkCopied && <span>Link copied!</span> }
+          </div>
         </div>
-      )}
+        <p data-testid="recipe-category">{ objDetail[0].strAlcoholic }</p>
+        <h4 data-testid="recipe-category">{ objDetail[0].strCategory }</h4>
+        <br />
+        <h3 className="font-medium">Ingredients</h3>
+        <ul className="bg-gray-300 mt-2 mb-2">
+          {arrayIngred.map((ingredient, i) => (
+            <li
+              className="ml-4"
+              key={ i }
+              data-testid={ `${i}-ingredient-name-and-measure` }
+            >
+              {ingredient}
+            </li>
+          ))}
+        </ul>
+        <br />
+        <h3 className="font-medium">Instruction</h3>
+        <p
+          className="bg-gray-200"
+          data-testid="instructions"
+        >
+          { objDetail[0].strInstructions }
+        </p>
+        <br />
+        <h3 className="mb-1 font-medium">Recommended</h3>
+        {recomFood && (
+          <div className="h-full flex flex-wrap-nowrap overflow-x-scroll">
+            { recomFood.map((food, index) => (
+              <div
+                data-testid={ `${index}-recomendation-card` }
+                key={ food.idMeal }
+                className="mr-2"
+              >
+                <Link to={ `/foods/${food.idMeal}` }>
+                  <img
+                    src={ `${food.strMealThumb}/preview` }
+                    alt={ food.strMeal }
+                    className="rounded-md"
+                  />
+                  <h4 data-testid={ `${index}-recomendation-title` }>
+                    { food.strMeal }
+                  </h4>
+                </Link>
+                <br />
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+      <br />
       <StartContinueButton />
     </div>
   );

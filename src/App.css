@@ -12,27 +12,17 @@
   width: 320px;
 }
 
-.photoConfig {
-  background-size: cover;
-  display: flex;
-}
-
-.filterButtons {
+/* .filterButtons {
   display: flex;
   justify-content: space-between;
   padding-left: 50px;
   padding-right: 50px;
-}
+} */
 
-.login-container button {
-  background-color: darkgreen;
-  color: black;
-  font-size: 20px;
-  height: 60px;
-  margin-top: 60px;
-  width: 320px;
+.temporario {
+  display: flex;
+  flex-direction: column;
 }
-
 
 .meals {
   align-items: center;
@@ -77,9 +67,9 @@
   font-weight: 900;
 }
 
-.newList {
+/* .newList {
   margin: 10px;
-}
+} */
 
 @keyframes shake {
 

@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import RecipesContext from '../context/RecipesContext';
 
-import './Header.css';
+import '../Css/Header.css';
 
 import Input from './Input';
 import profileIcon from '../images/profileIcon.svg';
@@ -54,6 +54,7 @@ function Header(props) {
           { redirect && <Redirect to="/profile" />}
         </button>
         <h1
+          className="text-2xl font-bold"
           data-testid="page-title"
         >
           {children}
@@ -73,17 +74,24 @@ function Header(props) {
       </div>
 
       { showInput && (
-        <div>
-          <Input
-            dataTestId="search-input"
-            idLabel="searchInput"
-            nameInput="searchInput"
-            placeholderInput="Search Recipe"
-            handleInputChange={ handleInputChange }
-            typeInput="text"
-            valueInput={ searchInput }
-          />
+        <div
+          className="flex items-center flex-col bg-gray-100"
+        >
           <div>
+            <Input
+              classInput="placeholder:italic placeholder:text-slate-400 w-full mt-3 px-5
+              border rounded border-gray-500 border border-slate-300 rounded-md
+              py-1 pl-1 pr-20 shadow-sm"
+              dataTestId="search-input"
+              idLabel="searchInput"
+              nameInput="searchInput"
+              placeholderInput="Search Recipe"
+              handleInputChange={ handleInputChange }
+              typeInput="text"
+              valueInput={ searchInput }
+            />
+          </div>
+          <div className="w-full flex justify-evenly">
             <Input
               dataTestId="ingredient-search-radio"
               typeInput="radio"
@@ -109,13 +117,18 @@ function Header(props) {
               handleInputChange={ handleRadioChange }
             />
           </div>
-          <button
-            type="button"
-            onClick={ handleClick }
-            data-testid="exec-search-btn"
-          >
-            Search
-          </button>
+          <div>
+            <button
+              className="rounded-full bg-transparent hover:bg-gray-500 text-white
+              font-semibold hover:text-white py-1 px-4 border
+              hover:border-transparent rounded bg-gray-800 m-2"
+              type="button"
+              onClick={ handleClick }
+              data-testid="exec-search-btn"
+            >
+              Search
+            </button>
+          </div>
         </div>
       )}
     </>

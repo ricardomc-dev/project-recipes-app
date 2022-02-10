@@ -3,27 +3,50 @@ import { Link } from 'react-router-dom';
 import RecipeContext from '../context/RecipesContext';
 
 function MainFoodScreen() {
-  const { mealsData } = useContext(RecipeContext);
+  const { filtedMeals } = useContext(RecipeContext);
   const TWELVE = 12;
+  // const history = useHistory();
+
+  // useEffect(() => {
+  //   const ONE = 1;
+  //   if (arrayMeals !== null && arrayMeals.length === ONE) {
+  //     return history.push(`/foods/${arrayMeals[0].idMeal}`);
+  //   }
+  // }, [arrayMeals, history]);
+
+  // useEffect(() => {
+  //   const TWELVE = 12;
+  //   if (filtedMeals !== null && filtedMeals > TWELVE) {
+  //     return setFiltedMeals(filtedMeals.slice(0, TWELVE));
+  //   }
+  // }, [filtedMeals]);
 
   return (
-    <>
-      {mealsData.slice(0, TWELVE).map((meal, id) => (
-        <div data-testid={ `${id}-recipe-card` } key={ meal.idMeal }>
+    <main className="flex flex-wrap justify-evenly">
+      {filtedMeals.slice(0, TWELVE).map((meal, id) => (
+        <div
+          className="bg-white flex justify-center my-4 max-w-2/4 shadow-lg rounded-md"
+          data-testid={ `${id}-recipe-card` }
+          key={ meal.idMeal }
+        >
           <Link to={ `/foods/${meal.idMeal}` }>
-            <div>
-              <img
-                src={ `${meal.strMealThumb}/preview` }
-                alt={ meal.strMeal }
-                data-testid={ `${id}-card-img` }
-              />
-              <p data-testid={ `${id}-card-name` }>{meal.strMeal}</p>
-            </div>
+            <img
+              src={ `${meal.strMealThumb}` }
+              alt={ meal.strMeal }
+              data-testid={ `${id}-card-img` }
+              width="150"
+              height="150"
+            />
+            <p
+              className="flex justify-center m-1"
+              data-testid={ `${id}-card-name` }
+            >
+              {meal.strMeal}
+            </p>
           </Link>
-          <br />
         </div>
       ))}
-    </>
+    </main>
   );
 }
 

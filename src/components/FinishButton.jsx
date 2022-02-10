@@ -10,9 +10,9 @@ function FinishButton(props) {
     <button
       className={
         isDisabled
-          ? `w-full bottom-0 bg-red-500 hover:bg-red-700
-      text-white font-bold py-2 border border-blue-700 rounded`
-          : `w-full bottom-0 bg-blue-500 hover:bg-blue-700
+          ? `w-full bottom-0 bg-red-700 hover:bg-red-700
+      text-white font-bold py-2 border border-red-700 rounded`
+          : `w-full bottom-0 bg-blue-700 hover:bg-blue-700
       text-white font-bold py-2 border border-blue-700 rounded`
       }
       data-testid="finish-recipe-btn"

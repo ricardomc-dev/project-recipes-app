@@ -12,7 +12,9 @@ function ExploreFdsIngred() {
       >
         Explore Ingredients
       </Header>
-      <Footer />
+      <div className="footerExplorer">
+        <Footer />
+      </div>
     </>
   );
 }
