@@ -13,9 +13,9 @@ export function nameApi(nome) {
     .catch((error) => error);
 }
 
-// Carregada no iniciar da página principal de Foods
-export function defaultMealsApi() {
-  return fetch('https://www.themealdb.com/api/json/v1/1/search.php?s=')
+// Carregamento aleatório Foods "Surprise Me"
+export function randomMealsApi() {
+  return fetch('https://www.themealdb.com/api/json/v1/1/random.php')
     .then((response) => response.json())
     .then((data) => data.meals)
     .catch((error) => error);

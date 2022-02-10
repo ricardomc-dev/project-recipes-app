@@ -13,9 +13,9 @@ export function nameDrinksApi(nome) {
     .catch((error) => error);
 }
 
-// Carregada no iniciar da página principal de Foods
-export function defaultDrinksApi() {
-  return fetch('https://www.thecocktaildb.com/api/json/v1/1/search.php?s=')
+// Carregamento aleatório Foods "Surprise Me"
+export function randomDrinksApi() {
+  return fetch('https://www.thecocktaildb.com/api/json/v1/1/random.php')
     .then((response) => response.json())
     .then((data) => data.drinks)
     .catch((error) => error);
