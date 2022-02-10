@@ -4,7 +4,6 @@ import RecipeContext from './RecipesContext';
 import {
   ingredientApi,
   nameApi,
-  defaultMealsApi,
   firstLetterApi,
   filterFoodButtons,
 } from '../service/ApiFoods';
@@ -12,7 +11,6 @@ import {
   ingredientDrinksApi,
   nameDrinksApi,
   firstLetterDrinksApi,
-  defaultDrinksApi,
   filterDrinkButtons,
 } from '../service/ApiDrinks';
 
@@ -40,13 +38,13 @@ function RecipeProvider({ children }) {
 
   useEffect(() => {
     async function apiMealRequest() {
-      const meals = await defaultMealsApi();
+      const meals = await nameApi('');
       verifyLength(meals);
       setArrayMeals(meals);
     }
     apiMealRequest();
     async function apiDrinkRequest() {
-      const drinks = await defaultDrinksApi();
+      const drinks = await nameDrinksApi('');
       verifyLength(drinks);
       setArrayDrinks(drinks);
     }

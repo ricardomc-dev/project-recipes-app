@@ -1,23 +1,32 @@
 import React, { useContext } from 'react';
 import RecipeContext from '../context/RecipesContext';
 import Button from './Button';
+import {
+  nameApi,
+} from '../service/ApiFoods';
 
 function FilterButtonsFoods() {
   const FIVE = 5;
   const {
-    arrayMeals,
+    /* arrayMeals, */
     filtedMeals,
     newListFoods,
     setFiltedMeals } = useContext(RecipeContext);
 
-  function filterByCategory(cat) {
+  async function filterByCategory(cat) {
     if (filtedMeals.every((item) => item.strCategory === cat)) {
-      return setFiltedMeals(arrayMeals);
+      const meals = await nameApi('');
+      return setFiltedMeals(meals);
     }
+    const meals = await nameApi(cat);
+
+    setFiltedMeals(meals);
+    /*
     if (cat) {
       return setFiltedMeals(arrayMeals.filter((recipe) => recipe.strCategory === cat));
     }
     setFiltedMeals(arrayMeals);
+    */
   }
 
   return (
@@ -28,7 +37,7 @@ function FilterButtonsFoods() {
       >
         <Button
           dataTestId="All-category-filter"
-          handleClick={ () => filterByCategory() }
+          handleClick={ () => filterByCategory('') }
         >
           All
         </Button>
