@@ -8,7 +8,6 @@ import FilterButtonsDrinks from '../components/FilterButtonsDrinks';
 function Drinks() {
   const {
     handleClickDrinks,
-    showPage,
   } = useContext(RecipeContext);
 
   const showSearchBtn = true;
@@ -22,7 +21,7 @@ function Drinks() {
         Drinks
       </Header>
       <FilterButtonsDrinks />
-      { showPage && <MainDrinkScreen /> }
+      <MainDrinkScreen />
       <Footer />
     </div>
   );

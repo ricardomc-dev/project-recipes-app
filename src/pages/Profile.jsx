@@ -23,6 +23,10 @@ function Profile() {
       >
         Profile
       </Header>
+      {/* <button data-testid="profile-done-btn" type="button">Profile</button>
+      <button data-testid="profile-favorite-btn" type="button">Profile</button>
+      <button data-testid="profile-logout-btn" type="button">Profile</button> */}
+      <Footer />
       <div className="temporario">
         <p data-testid="profile-email">{email}</p>
         <Button

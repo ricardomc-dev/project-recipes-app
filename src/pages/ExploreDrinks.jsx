@@ -12,9 +12,7 @@ function ExploreDrinks() {
       >
         Explore Drinks
       </Header>
-      <div className="footerExplorer">
-        <Footer />
-      </div>
+      <Footer />
     </>
   );
 }

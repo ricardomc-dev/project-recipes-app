@@ -19,6 +19,7 @@ function DetailDrinks({ match }) {
   const [recomFood, setRecomFood] = useState([]);
   const [isLinkCopied, setIsLinkCopied] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
+
   const whiteHeart = (
     <img
       data-testid="favorite-btn"
@@ -116,8 +117,9 @@ function DetailDrinks({ match }) {
         src={ `${objDetail[0].strDrinkThumb}` }
         alt="drink"
         data-testid="recipe-photo"
+        className="mb-2"
       />
-      <div>
+      <div className="ml-2 mr-2">
         <div className="w-full flex flex-row">
           <h2
             data-testid="recipe-title"
@@ -144,22 +146,23 @@ function DetailDrinks({ match }) {
         <p data-testid="recipe-category">{ objDetail[0].strAlcoholic }</p>
         <h4 data-testid="recipe-category">{ objDetail[0].strCategory }</h4>
         <br />
-        <h3 className="font-medium">Ingredients</h3>
-        <ul className="bg-gray-300 mt-2 mb-2">
-          {arrayIngred.map((ingredient, i) => (
-            <li
-              className="ml-4"
-              key={ i }
-              data-testid={ `${i}-ingredient-name-and-measure` }
-            >
-              {ingredient}
-            </li>
-          ))}
-        </ul>
-        <br />
+      </div>
+      <h3 className="font-medium ml-2">Ingredients</h3>
+      <ul className="bg-gray-300 mt-2 mb-2">
+        {arrayIngred.map((ingredient, i) => (
+          <li
+            className="ml-4"
+            key={ i }
+            data-testid={ `${i}-ingredient-name-and-measure` }
+          >
+            {ingredient}
+          </li>
+        ))}
+      </ul>
+      <br />
+      <div className="ml-2 mr-2">
         <h3 className="font-medium">Instruction</h3>
         <p
-          className="bg-gray-200"
           data-testid="instructions"
         >
           { objDetail[0].strInstructions }
@@ -167,7 +170,7 @@ function DetailDrinks({ match }) {
         <br />
         <h3 className="mb-1 font-medium">Recommended</h3>
         {recomFood && (
-          <div className="h-full flex flex-wrap-nowrap overflow-x-scroll">
+          <div className="h-full w-24 flex flex-wrap-nowrap overflow-x-scroll">
             { recomFood.map((food, index) => (
               <div
                 data-testid={ `${index}-recomendation-card` }
@@ -176,9 +179,9 @@ function DetailDrinks({ match }) {
               >
                 <Link to={ `/foods/${food.idMeal}` }>
                   <img
-                    src={ `${food.strMealThumb}/preview` }
+                    src={ `${food.strMealThumb}` }
                     alt={ food.strMeal }
-                    className="rounded-md"
+                    className="rounded-full h-12"
                   />
                   <h4 data-testid={ `${index}-recomendation-title` }>
                     { food.strMeal }

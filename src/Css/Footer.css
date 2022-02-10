@@ -6,18 +6,6 @@
   font-size: 25px;
   height: 50px;
   justify-content: space-around;
-  position: sticky;
-  width: 100%;
-}
-
-.footerExplorer {
-  align-items: center;
-  background-color: rgb(158, 157, 157);
-  bottom: 0;
-  display: flex;
-  font-size: 25px;
-  height: 50px;
-  justify-content: space-around;
   position: fixed;
   width: 100%;
 }

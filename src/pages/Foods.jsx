@@ -8,7 +8,6 @@ import FilterButtonsFoods from '../components/FilterButtonsFoods';
 function Foods() {
   const {
     handleClickFoods,
-    showPage,
   } = useContext(RecipeContext);
 
   const showSearchBtn = true;
@@ -22,7 +21,7 @@ function Foods() {
         Foods
       </Header>
       <FilterButtonsFoods />
-      { showPage && <MainFoodScreen /> }
+      <MainFoodScreen />
       <Footer />
     </>
   );

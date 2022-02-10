@@ -12,9 +12,7 @@ function ExploreFdsNation() {
       >
         Explore Nationalities
       </Header>
-      <div className="footerExplorer">
-        <Footer />
-      </div>
+      <Footer />
     </>
   );
 }

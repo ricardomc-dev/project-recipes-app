@@ -4,7 +4,6 @@ import RecipeContext from './RecipesContext';
 import {
   ingredientApi,
   nameApi,
-  defaultMealsApi,
   firstLetterApi,
   filterFoodButtons,
 } from '../service/ApiFoods';
@@ -12,7 +11,6 @@ import {
   ingredientDrinksApi,
   nameDrinksApi,
   firstLetterDrinksApi,
-  defaultDrinksApi,
   filterDrinkButtons,
 } from '../service/ApiDrinks';
 
@@ -29,26 +27,24 @@ function RecipeProvider({ children }) {
   const [filtedDrinks, setFiltedDrinks] = useState([]);
   const [newListDrinks, setNewListDrinks] = useState([]);
 
-  const [showPage, setShowPage] = useState(true);
-
   const verifyLength = (param) => {
     if (param === null || !param) {
       return global.alert('Sorry, we haven\'t found any recipes for these filters.');
     }
   };
 
-  console.log(arrayMeals.length, arrayDrinks.length);
-  console.log(filtedMeals);
+  // console.log(arrayMeals.length, arrayDrinks.length);
+  // console.log(filtedMeals);
 
   useEffect(() => {
     async function apiMealRequest() {
-      const meals = await defaultMealsApi();
+      const meals = await nameApi('');
       verifyLength(meals);
       setArrayMeals(meals);
     }
     apiMealRequest();
     async function apiDrinkRequest() {
-      const drinks = await defaultDrinksApi();
+      const drinks = await nameDrinksApi('');
       verifyLength(drinks);
       setArrayDrinks(drinks);
     }
@@ -58,11 +54,8 @@ function RecipeProvider({ children }) {
   useEffect(() => {
     setFiltedMeals(arrayMeals);
     setFiltedDrinks(arrayDrinks);
+    console.log(arrayMeals);
   }, [arrayMeals, arrayDrinks]);
-
-  const showMainPage = () => {
-    setShowPage(!showPage);
-  };
 
   useEffect(() => {
     filterDrinkButtons()
@@ -94,7 +87,6 @@ function RecipeProvider({ children }) {
       verifyLength(meals);
       setArrayMeals(meals);
     }
-    showMainPage();
   };
 
   const handleClickDrinks = async () => {
@@ -117,7 +109,6 @@ function RecipeProvider({ children }) {
       verifyLength(drinks);
       setArrayDrinks(drinks);
     }
-    showMainPage();
   };
 
   const contextValue = {
@@ -133,7 +124,6 @@ function RecipeProvider({ children }) {
     handleClickFoods,
     handleClickDrinks,
     setFiltedDrinks,
-    showPage,
     newListDrinks,
     newListFoods,
   };
