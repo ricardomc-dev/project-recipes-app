@@ -123,6 +123,9 @@ const fetch = (url) => Promise.resolve({
     if (url === 'https://www.themealdb.com/api/json/v1/1/search.php?s=')
       return Promise.resolve(meals);
 
+    // if (url === 'https://www.themealdb.com/api/json/v1/1/lookup.php?i=52977')
+    //   return Promise.resolve(oneMeal);
+
     return Promise.reject(new Error('Invalid url'));
   },
 });

@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import copy from 'clipboard-copy';
+import RecipeContext from '../context/RecipesContext';
 import { detailApi } from '../service/ApiFoods';
 import { nameDrinksApi } from '../service/ApiDrinks';
 import StartContinueButton from '../components/StartContinueButton';
@@ -15,6 +16,7 @@ import whiteHeartIcon from '../images/whiteHeartIcon.svg';
 import blackHeartIcon from '../images/blackHeartIcon.svg';
 
 function DetailFoods({ match }) {
+  const { filtedMeals } = useContext(RecipeContext);
   const [objDetail, setObjDetail] = useState([]);
   const [recomDrink, setRecomDrink] = useState([]);
   const [isLinkCopied, setIsLinkCopied] = useState(false);
@@ -69,6 +71,10 @@ function DetailFoods({ match }) {
   }, []);
 
   useEffect(() => {
+    if (filtedMeals.some((item) => item.idMeal === idReceita)) {
+      const detail = filtedMeals.filter((item) => item.idMeal === idReceita);
+      return setObjDetail(detail);
+    }
     const apiRequest = async () => {
       const detail = await detailApi(idReceita);
       setObjDetail(detail);
@@ -77,7 +83,7 @@ function DetailFoods({ match }) {
   }, [idReceita]);
 
   if (objDetail.length === 0) return null;
-
+  console.log(objDetail);
   const VINTE = 20;
   const arrayIngred = [];
   for (let i = 1; i <= VINTE; i += 1) {

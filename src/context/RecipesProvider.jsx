@@ -6,6 +6,7 @@ import {
   nameApi,
   firstLetterApi,
   filterFoodButtons,
+  nationApi,
 } from '../service/ApiFoods';
 import {
   ingredientDrinksApi,
@@ -54,7 +55,6 @@ function RecipeProvider({ children }) {
   useEffect(() => {
     setFiltedMeals(arrayMeals);
     setFiltedDrinks(arrayDrinks);
-    console.log(arrayMeals);
   }, [arrayMeals, arrayDrinks]);
 
   useEffect(() => {
@@ -111,6 +111,17 @@ function RecipeProvider({ children }) {
     }
   };
 
+  const handleNationSelect = async (nation) => {
+    let meals;
+    if (!nation) {
+      meals = await nameApi('');
+    } else {
+      meals = await nationApi(nation);
+    }
+    verifyLength(meals);
+    setArrayMeals(meals);
+  };
+
   const contextValue = {
     searchInput,
     searchRadio,
@@ -118,14 +129,17 @@ function RecipeProvider({ children }) {
     arrayDrinks,
     filtedMeals,
     filtedDrinks,
+    newListDrinks,
+    newListFoods,
+    setArrayMeals,
+    setArrayDrinks,
     setFiltedMeals,
     setSearchInput,
     setSearchRadio,
     handleClickFoods,
     handleClickDrinks,
     setFiltedDrinks,
-    newListDrinks,
-    newListFoods,
+    handleNationSelect,
   };
 
   return (

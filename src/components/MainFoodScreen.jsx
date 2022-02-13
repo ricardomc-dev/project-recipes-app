@@ -30,7 +30,6 @@ function MainFoodScreen() {
 
   return (
     <main className="flex flex-wrap justify-evenly">
-      {console.log(filtedMeals)}
       {filtedMeals && filtedMeals.slice(0, TWELVE).map((meal, id) => (
         <div
           className="bg-white flex justify-center my-4 max-w-2/4 shadow-lg rounded-md"

@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { Redirect } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import RecipesContext from '../context/RecipesContext';
 
@@ -11,7 +11,7 @@ import searchIcon from '../images/searchIcon.svg';
 
 function Header(props) {
   const [showInput, setShowInput] = useState(false);
-  const [redirect, setRedirect] = useState(false);
+  const history = useHistory();
 
   const {
     searchInput,
@@ -33,17 +33,13 @@ function Header(props) {
     setShowInput(!showInput);
   };
 
-  const sendToProfile = () => {
-    setRedirect(true);
-  };
-
   const { showSearchBtn, children, handleClick } = props;
 
   return (
     <>
       <div className="header-container">
         <button
-          onClick={ sendToProfile }
+          onClick={ () => history.push('/profile') }
           type="button"
         >
           <img
@@ -51,7 +47,6 @@ function Header(props) {
             alt="profileIcon"
             src={ profileIcon }
           />
-          { redirect && <Redirect to="/profile" />}
         </button>
         <h1
           className="text-2xl font-bold"

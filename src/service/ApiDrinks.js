@@ -35,9 +35,17 @@ export function detailDrinksApi(idReceita) {
     .catch((error) => error);
 }
 
-// Retorna os botões de filtro
+// Retorna os botões de filtro Categoria
 export function filterDrinkButtons() {
   return fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?c=list')
+    .then((response) => response.json())
+    .then((data) => data.drinks)
+    .catch((error) => error);
+}
+
+// Retorna lista de ingredientes
+export function filterApiIngredDrink() {
+  return fetch('https://www.thecocktaildb.com/api/json/v1/1/list.php?i=list')
     .then((response) => response.json())
     .then((data) => data.drinks)
     .catch((error) => error);
