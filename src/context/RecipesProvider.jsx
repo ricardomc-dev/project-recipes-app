@@ -113,7 +113,7 @@ function RecipeProvider({ children }) {
 
   const handleNationSelect = async (nation) => {
     let meals;
-    if (!nation) {
+    if (!nation || nation === 'all') {
       meals = await nameApi('');
     } else {
       meals = await nationApi(nation);

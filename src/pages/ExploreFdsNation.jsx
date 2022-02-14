@@ -21,7 +21,7 @@ function ExploreFdsNation() {
 
   useEffect(() => {
     handleNationSelect(valueSelect);
-  }, [valueSelect]);
+  }, [valueSelect, handleNationSelect]);
 
   return (
     <>
@@ -38,6 +38,7 @@ function ExploreFdsNation() {
           py-1 pl-1 pr-20 bg-white"
           onChange={ (e) => setValueSelect(e.target.value) }
         >
+          <option data-testid="All-option" value="all">All</option>
           {nationsArr && nationsArr.map((item, id) => (
             <option
               key={ id }
